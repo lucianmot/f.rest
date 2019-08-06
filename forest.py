@@ -5,5 +5,7 @@ class Interpreter(object):
     def response(self):
         if self.text == "echo <<>>":
             return ""
+        elif self.text == "echo <<hello>>":
+            return "hello"    
         else:
             return "a"
