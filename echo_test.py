@@ -16,3 +16,8 @@ class TestInterpreter(unittest.TestCase):
         from forest import Interpreter
         interpreter = Interpreter("echo <<hello>>")
         self.assertEqual(interpreter.response(), "hello")
+
+    def test_interpreter_should_return_hello_world_when_echo_with_hello_world(self):
+        from forest import Interpreter
+        interpreter = Interpreter("echo <<Hello, world!>>")
+        self.assertEqual(interpreter.response(), "Hello, world!")

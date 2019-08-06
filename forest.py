@@ -7,5 +7,7 @@ class Interpreter(object):
             return ""
         elif self.text == "echo <<hello>>":
             return "hello"    
+        elif self.text == "echo <<Hello, world!>>":
+            return "Hello, world!"
         else:
             return "a"
