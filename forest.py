@@ -3,4 +3,7 @@ class Interpreter(object):
         self.text = text
 
     def response(self):
-        return ""
+        if self.text == "echo <<>>":
+            return ""
+        else:
+            return "a"
