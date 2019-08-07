@@ -12,13 +12,22 @@ class Interpreter(object):
     def tokeniser(self):
         if bool(re.match("echo", self.text)) == True:
             echo = self.text[0:4]
-            restofstr = self.text[5:]
-            return [{"ECHO": echo},
-                    {"STRING": restofstr}]
+            restofstr = self.text[4:]
+            if bool(re.match("<<", restofstr)) == False:
+                raise Exception("Error 1")
+            elif bool(re.match("<<", restofstr)) == True:
+                if bool(re.search(">>", restofstr)) == False:
+                    raise Exception("Error 2")
+                elif bool(re.search(">>", restofstr)) == True:
+                    strstart = restofstr[0:2]
+                    middle = restofstr[2:-2]
+                    strstop = restofstr[-2:]
+                    return [{"ECHO": echo},
+                            {"STRSTART" : strstart},
+                            {"STRING" : middle},
+                            {"STRSTOP" : strstop}]
         else:
-            raise Exception
-
-
+            raise Exception("Error 3")
 
 # diffrent types of tokens
 # input "ECHO a"; output [{ECHO: ECHO}, {STRING: a}]
