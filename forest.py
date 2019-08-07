@@ -15,9 +15,7 @@ class Interpreter(object):
             return "a"
 
     def tokeniser(self):
-        if self.text[0] == "e":
-            return [{'STRING' : self.text[0]}]
-        elif self.text[0] == "a":
-            return [{'STRING' : self.text[0]}]
+        if self.text[0].isalpha() == True:
+            return [{"STRING" : self.text[0]}]
         else:
             return "oops"
