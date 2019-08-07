@@ -6,7 +6,7 @@ class Interpreter(object):
         self.text = text
 
     def response(self):
-        token = self.tokeniser()[1]
+        token = self.tokeniser()[2]
         return token.get("STRING")
 
     def tokeniser(self):
