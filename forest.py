@@ -8,16 +8,16 @@ class Interpreter(object):
         if self.text == "echo <<>>":
             return ""
         elif self.text == "echo <<hello>>":
-            return "hello"    
+            return "hello"
         elif self.text == "echo <<Hello, world!>>":
             return "Hello, world!"
         else:
             return "a"
 
     def tokeniser(self):
-       if self.text[0] == "e":
-            return ['ECHO', self.text[0]]
-       else:
+        if self.text[0] == "e":
+            return [{'STRING' : self.text[0]}]
+        elif self.text[0] == "a":
+            return [{'STRING' : self.text[0]}]
+        else:
             return "oops"
-
-     
