@@ -1,3 +1,5 @@
+#ECHO, LETTER, STRINGTXT, EOF, STRINGSTART, STRINGEND = 'ECHO', 'LETTER', 'STRINGTXT', 'EOF', 'STRINGSTART', 'STRINGEND'
+
 class Interpreter(object):
     def __init__(self, text):
         self.text = text
@@ -11,3 +13,11 @@ class Interpreter(object):
             return "Hello, world!"
         else:
             return "a"
+
+    def tokeniser(self):
+       if self.text[0] == "e":
+            return ['ECHO', self.text[0]]
+       else:
+            return "oops"
+
+     
