@@ -17,7 +17,7 @@ class TestInterpreter(unittest.TestCase):
         interpreter = Interpreter("Z")
         self.assertEqual(interpreter.tokeniser(), [{"STRING" : "Z"}])
 
-    def test_method_returns_oops_when_passed_number(self):
+    def test_method_returns_exception_when_passed_number(self):
         from forest import Interpreter
         interpreter = Interpreter("9")
-        self.assertEqual(interpreter.tokeniser(), "oops")
+        self.assertRaises(Exception, interpreter.tokeniser)
