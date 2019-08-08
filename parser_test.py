@@ -11,7 +11,7 @@ class TestParser(unittest.TestCase):
         #When parser is run
         #It returns true
         from forest import Parser
-        tokens = []
+        tokens = {"ECHO": 1, "STRSTART" : 2, "STRING" : 3, "STRSTOP" : 4}
         parser = Parser(tokens)
         self.assertEqual(parser.run_parser(), True)
         

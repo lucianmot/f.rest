@@ -7,7 +7,7 @@ class Interpreter(object):
 
     def response(self):
         tokeniser = Tokeniser(self.text)
-        token = tokeniser.create_token()[2]
+        token = tokeniser.create_token()
         return token.get("STRING")
 
 
@@ -28,10 +28,11 @@ class Tokeniser(object):
                     strstart = restofstr[0:2]
                     middle = restofstr[2:-2]
                     strstop = restofstr[-2:]
-                    return [{"ECHO": echo},
-                            {"STRSTART" : strstart},
-                            {"STRING" : middle},
-                            {"STRSTOP" : strstop}]
+                    return {"ECHO": echo, "STRSTART" : strstart, "STRING" : middle, "STRSTOP" : strstop}
+                 #   return [{"ECHO": echo},
+                 #           {"STRSTART" : strstart},
+                 #           {"STRING" : middle},
+                 #           {"STRSTOP" : strstop}]
         else:
             raise Exception("Error 3")
 
@@ -39,11 +40,19 @@ class Tokeniser(object):
 class Parser(object):
     def __init__(self, tokens):
         self.tokens = tokens
+        self.parse_dict = [["ECHO", "STRSTART", "STRING", "STRSTOP"]]
+
+    def keytify_tokens(self):
+        parse_keys = []
+        for key in self.tokens:
+            parse_keys.append(key)
+            
+        return parse_keys
 
     def run_parser(self):
-        return True
-
-
+        return self.parse_dict[0] == self.keytify_tokens()
+    
+    
 # diffrent types of tokens
 # input "ECHO a"; output [{ECHO: ECHO}, {STRING: a}]
 # add parser as the next step
