@@ -36,7 +36,12 @@ class Tokeniser(object):
             raise Exception("Error 3")
 
 
+class Parser(object):
+    def __init__(self, tokens):
+        self.tokens = tokens
 
+    def run_parser(self):
+        return True
 
 
 # diffrent types of tokens
