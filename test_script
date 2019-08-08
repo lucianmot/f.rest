@@ -1,0 +1,12 @@
+#!/bin/bash
+echo '***** Tests *****'
+echo ' '
+python3 -m unittest parser_test.py tokeniser_test.py interpreter_test.py -v
+coverage run forest.py parser_test.py tokeniser_test.py interpreter_test.py
+coverage html
+echo ' '
+echo '***** Coverage *****'
+echo ' '
+coverage report -m
+echo ' '
+echo '***** Done *****'

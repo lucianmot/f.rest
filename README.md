@@ -8,20 +8,32 @@ A Python-based, forest-themed programming language. Coming soon!
 
 * Ensure you have Python v3.7.4 installed.
 * Clone this repository.
-
-## How to Test
-
-```console
-$ python3 -m unittest echo_test.py tokeniser_test.py
-```
-
-## How to Check Code Coverage
-
-Install code coverage tool:
+* Install code coverage tool:
 
 ```console
 $ pip3 install coverage
 ```
+
+### Test and Code Coverage (via Script)
+
+A script is included to run all tests and code coverage (recommended).
+
+```console
+$ bash test_script
+```
+
+Read the output on the console, and open the htmlcov/index.html file to view details of coverage.
+
+## How to Test (Manually)
+
+run the command below specifiying the test file to be included.
+
+```console
+$ python3 -m unittest tokeniser_test.py
+```
+
+## How to Check Code Coverage (Maually)
+
 Run the code coverage report:
 
 ```console
