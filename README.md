@@ -29,7 +29,7 @@ Read the output on the console, and open the htmlcov/index.html file to view det
 run the command below specifiying the test file to be included.
 
 ```console
-$ python3 -m unittest tokeniser_test.py
+$ python3 -m unittest tokeniser_test.py parser_test.py interpreter_test.py
 ```
 
 ## How to Check Code Coverage (Maually)
@@ -37,7 +37,7 @@ $ python3 -m unittest tokeniser_test.py
 Run the code coverage report:
 
 ```console
-$ coverage run forest.py echo_test.py tokeniser_test.py
+$ coverage run forest.py echo_test.py tokeniser_test.py interpreter_test.py
 $ coverage html
 ```
 
@@ -51,9 +51,11 @@ $ python3
 ```
 ```python
 >>> from forest import Interpreter
->>> interpreter = Interpreter("echo<<Hello World!>>")
+>>> interpreter = Interpreter("echo<<Hello World!>>") 
 >>> interpreter.response()
 ```
+Try putting your own message between the `<<tree tops>>`!  
+
 Take care, don't start the fire. 
 
 ## Design
