@@ -2,7 +2,7 @@
 
 A Python-based, forest-themed programming language. Coming soon!
 
-# 🐻
+# 🐻 [![Build Status](https://travis-ci.org/lucianmot/f.rest.svg?branch=master)](https://travis-ci.org/lucianmot/f.rest)
 
 ## How to Install
 
@@ -54,9 +54,11 @@ $ python3
 >>> interpreter = Interpreter("echo<<Hello World!>>") 
 >>> interpreter.response()
 ```
+
 Try putting your own message between the `<<tree tops>>`!  
 
 Take care, don't start the fire. 
+
 
 ## Design
 
