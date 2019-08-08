@@ -1,4 +1,3 @@
-#ECHO, LETTER, STRINGTXT, EOF, STRINGSTART, STRINGEND = 'ECHO', 'LETTER', 'STRINGTXT', 'EOF', 'STRINGSTART', 'STRINGEND'
 import re
 
 class Interpreter(object):
@@ -29,10 +28,7 @@ class Tokeniser(object):
                     middle = restofstr[2:-2]
                     strstop = restofstr[-2:]
                     return {"ECHO": echo, "STRSTART" : strstart, "STRING" : middle, "STRSTOP" : strstop}
-                 #   return [{"ECHO": echo},
-                 #           {"STRSTART" : strstart},
-                 #           {"STRING" : middle},
-                 #           {"STRSTOP" : strstop}]
+                 
         else:
             raise Exception("Error 3")
 
@@ -52,7 +48,3 @@ class Parser(object):
     def run_parser(self):
         return self.parse_dict[0] == self.keytify_tokens()
     
-    
-# diffrent types of tokens
-# input "ECHO a"; output [{ECHO: ECHO}, {STRING: a}]
-# add parser as the next step
