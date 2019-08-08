@@ -2,6 +2,6 @@ language: python
 python:
   - "3.7"
 install:
-  - pip3 install coverage 
+  - pip3 install coverage
 
 script: bash test_script
