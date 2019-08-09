@@ -14,21 +14,32 @@ class Tokeniser(object):
     def __init__(self, text):
         self.text = text
 
-    def create_token(self):
+    def isecho(self):
         if bool(re.match("echo", self.text)) == True:
-            echo = self.text[0:4]
-            restofstr = self.text[4:]
-            if bool(re.match("<<", restofstr)) == False:
-                raise Exception("Error 1")
-            elif bool(re.match("<<", restofstr)) == True:
-                if bool(re.search(">>", restofstr)) == False:
-                    raise Exception("Error 2")
-                elif bool(re.search(">>", restofstr)) == True:
-                    strstart = restofstr[0:2]
-                    middle = restofstr[2:-2]
-                    strstop = restofstr[-2:]
-                    return {"ECHO": echo, "STRSTART" : strstart, "STRING" : middle, "STRSTOP" : strstop}
-        
+            return True
+        else:
+            return False
+
+    def tokenise_echo(self):
+        echo = self.text[0:4]
+        restofstr = self.text[4:]
+        if bool(re.match("<<", restofstr)) == False:
+            raise Exception("Error 1")
+        elif bool(re.match("<<", restofstr)) == True:
+            if bool(re.search(">>", restofstr)) == False:
+                raise Exception("Error 2")
+            elif bool(re.search(">>", restofstr)) == True:
+                strstart = restofstr[0:2]
+                middle = restofstr[2:-2]
+                strstop = restofstr[-2:]
+                return {"ECHO": echo, "STRSTART" : strstart, "STRING" : middle, "STRSTOP" : strstop}
+            else: 
+                raise Exception('Exception 7') 
+
+
+    def create_token(self):
+        if self.isecho() == True:
+            return self.tokenise_echo()
         elif bool(re.search("true", self.text)) == True:
             return {"TRUE" : "true"}
         elif bool(re.search("false", self.text)) == True:
