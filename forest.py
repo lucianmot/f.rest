@@ -36,7 +36,10 @@ class Tokeniser(object):
 class Parser(object):
     def __init__(self, tokens):
         self.tokens = tokens
-        self.parse_dict = [["ECHO", "STRSTART", "STRING", "STRSTOP"]]
+        self.parse_dict = [
+            ["ECHO", "STRSTART", "STRING", "STRSTOP"],
+            ["ECHO", "INTEGER"]
+            ]
 
     def keytify_tokens(self):
         parse_keys = []
@@ -46,5 +49,11 @@ class Parser(object):
         return parse_keys
 
     def run_parser(self):
-        return self.parse_dict[0] == self.keytify_tokens()
+        if(self.parse_dict[0] == self.keytify_tokens()):
+            return True
+        elif(self.parse_dict[1] == self.keytify_tokens()):
+            return True
+        else:
+            return False
+
     
