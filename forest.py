@@ -44,16 +44,14 @@ class Parser(object):
         parse_keys = []
         for key in self.tokens:
             parse_keys.append(key)
-
         return parse_keys
 
     def match_grammar_rule(self):
-        if(self.rules[0].rule == self.user_input_tokens()):
-            return self.rules[0].rule_name
-        elif(self.rules[1].rule == self.user_input_tokens()):
-            return self.rules[1].rule_name
-        else:
-            raise Exception("Syntax Error")
+        for rule in self.rules:
+            if rule.rule == self.user_input_tokens():
+                return rule.rule_name
+        raise Exception("Syntax Error")
+
 
 class GrammarRule(object):
     def __init__(self, rule_name, rule):
