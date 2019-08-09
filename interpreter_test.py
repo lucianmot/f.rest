@@ -1,7 +1,5 @@
 import unittest
-from forest import Interpreter
-from forest import Tokeniser
-from forest import Parser
+from forest import Interpreter, Tokeniser, Parser
 
 class TestInterpreter(unittest.TestCase):
 
@@ -45,6 +43,10 @@ class TestTokeniser(unittest.TestCase):
 
     def test_method_raises_exception_when_strstart_is_not_present(self):
         tokeniser = Tokeniser("echohello>>")
+        self.assertRaises(Exception, tokeniser.create_token)
+
+    def test_method_raises_exception_when_strstop_is_not_present(self):
+        tokeniser = Tokeniser("echo<<hello")
         self.assertRaises(Exception, tokeniser.create_token)
 
 class TestParser(unittest.TestCase):
