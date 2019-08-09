@@ -4,4 +4,6 @@ python:
 install:
   - pip3 install coverage
 
-script: bash test_script
+script:
+- python3 -m unittest tokeniser_test.py parser_test.py interpreter_test.py
+- bash test_script
