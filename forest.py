@@ -46,10 +46,10 @@ class Parser(object):
 
         return parse_keys
 
-    def run_parser(self):
+    def match_grammar_rule(self):
         if(self.grammar_rule_1 == self.user_input_tokens()):
-            return True
+            return "grammar_rule_1"
         elif(self.grammar_rule_2 == self.user_input_tokens()):
-            return True
+            return "grammar_rule_2"
         else:
             raise Exception("Syntax Error")
