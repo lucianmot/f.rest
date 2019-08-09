@@ -50,10 +50,15 @@ class TestTokeniser(unittest.TestCase):
         self.assertRaises(Exception, tokeniser.create_token)
 
 class TestParser(unittest.TestCase):
-    def test_something(self):
-        tokens = {"ECHO": 1, "STRSTART" : 2, "STRING" : 3, "STRSTOP" : 4}
+    def test_valid_sequence_of_tokens_returns_true(self):
+        tokens = {"ECHO": "echo", "STRSTART" : "<<", "STRING" : "string", "STRSTOP" : ">>"}
         parser = Parser(tokens)
         self.assertEqual(parser.run_parser(), True)
+
+    def test_invalid_sequence_of_tokens_returns_false(self):
+        tokens = {"ECHO": "echo", "STRING" : "string", "STRSTOP" : ">>"}
+        parser = Parser(tokens)
+        self.assertEqual(parser.run_parser(), False)
 
 if __name__ == '__main__':
     unittest.main()
