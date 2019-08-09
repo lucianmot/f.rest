@@ -65,5 +65,11 @@ class TestParser(unittest.TestCase):
         parser = Parser(tokens)
         self.assertEqual(parser.run_parser(), True)
 
+    def test_invalid_sequence_of_integer_tokens_returns_false(self):
+        tokens = {"INTEGER": 8, "ECHO": "echo"}
+        parser = Parser(tokens)
+        self.assertEqual(parser.run_parser(), False)
+
+
 if __name__ == '__main__':
     unittest.main()
