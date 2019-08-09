@@ -28,7 +28,7 @@ class Tokeniser(object):
                     middle = restofstr[2:-2]
                     strstop = restofstr[-2:]
                     return {"ECHO": echo, "STRSTART" : strstart, "STRING" : middle, "STRSTOP" : strstop}
-                 
+
         else:
             raise Exception("Error 3")
 
@@ -36,15 +36,24 @@ class Tokeniser(object):
 class Parser(object):
     def __init__(self, tokens):
         self.tokens = tokens
-        self.parse_dict = [["ECHO", "STRSTART", "STRING", "STRSTOP"]]
+        self.grammar_rule_1 = GrammarRule("grammar_rule_1",["ECHO", "STRSTART", "STRING", "STRSTOP"])
+        self.grammar_rule_2 = GrammarRule("grammar_rule_2",["ECHO", "INTEGER"])
+        self.rules = [self.grammar_rule_1, self.grammar_rule_2]
 
-    def keytify_tokens(self):
+    def user_input_tokens(self):
         parse_keys = []
         for key in self.tokens:
             parse_keys.append(key)
-            
         return parse_keys
 
-    def run_parser(self):
-        return self.parse_dict[0] == self.keytify_tokens()
-    
+    def match_grammar_rule(self):
+        for rule in self.rules:
+            if rule.rule == self.user_input_tokens():
+                return rule.rule_name
+        raise Exception("Syntax Error")
+
+
+class GrammarRule(object):
+    def __init__(self, rule_name, rule):
+        self.rule_name = rule_name
+        self.rule = rule
