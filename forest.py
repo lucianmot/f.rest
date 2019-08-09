@@ -1,5 +1,11 @@
 import re
 
+TRUE = re.compile(r'true')
+FALSE = re.compile(r'false')
+INTEGER = re.compile(r'\d*gi')
+COMPARISON = re.compile(r'==')
+TOKEN_TYPES = [ FALSE, TRUE, INTEGER, COMPARISON ]
+
 class Interpreter(object):
     def __init__(self, text):
         self.text = text
@@ -40,12 +46,16 @@ class Tokeniser(object):
     def create_token(self):
         if self.isecho() == True:
             return self.tokenise_echo()
-        elif bool(re.search("true", self.text)) == True:
-            return {"TRUE" : "true"}
-        elif bool(re.search("false", self.text)) == True:
-            return {"FALSE" : "false"}
+        # elif bool(re.search("true", self.text)) == True:
+        #     return {"TRUE" : "true"}
+        # elif bool(re.search("false", self.text)) == True:
+        #     return {"FALSE" : "false"}
         else:
-            raise Exception("Error 3")
+            valid_tokens = []
+            for token in TOKEN_TYPES:
+                search_variable = token.search(self.text)
+                valid_tokens.append(search_variable)
+            return valid_tokens
 
 
 class Parser(object):
