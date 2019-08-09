@@ -58,7 +58,7 @@ class TestParser(unittest.TestCase):
     def test_invalid_sequence_of_string_tokens_returns_false(self):
         tokens = {"ECHO": "echo", "STRING" : "string", "STRSTOP" : ">>"}
         parser = Parser(tokens)
-        self.assertEqual(parser.run_parser(), False)
+        self.assertRaises(Exception, parser.run_parser)
 
     def test_valid_sequence_of_integer_tokens_returns_true(self):
         tokens = {"ECHO": "echo", "INTEGER": 8}
@@ -68,7 +68,7 @@ class TestParser(unittest.TestCase):
     def test_invalid_sequence_of_integer_tokens_returns_false(self):
         tokens = {"INTEGER": 8, "ECHO": "echo"}
         parser = Parser(tokens)
-        self.assertEqual(parser.run_parser(), False)
+        self.assertRaises(Exception, parser.run_parser)
 
 
 if __name__ == '__main__':

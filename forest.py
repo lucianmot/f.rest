@@ -28,7 +28,7 @@ class Tokeniser(object):
                     middle = restofstr[2:-2]
                     strstop = restofstr[-2:]
                     return {"ECHO": echo, "STRSTART" : strstart, "STRING" : middle, "STRSTOP" : strstop}
-                 
+
         else:
             raise Exception("Error 3")
 
@@ -45,7 +45,7 @@ class Parser(object):
         parse_keys = []
         for key in self.tokens:
             parse_keys.append(key)
-            
+
         return parse_keys
 
     def run_parser(self):
@@ -54,6 +54,4 @@ class Parser(object):
         elif(self.parse_dict[1] == self.keytify_tokens()):
             return True
         else:
-            return False
-
-    
+            raise Exception("Syntax Error")
