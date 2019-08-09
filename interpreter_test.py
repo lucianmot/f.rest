@@ -1,45 +1,59 @@
 import unittest
+from forest import Interpreter, Tokeniser, Parser
 
 class TestInterpreter(unittest.TestCase):
-#    @unittest.skip("test_interpreter_should_return_A_when_user_enters_A")
+
+    def test_intepreter_should_be_initialized_with_text(self):
+        interpreter = Interpreter("echo")
+        self.assertEqual(interpreter.text, "echo")
+
     def test_interpreter_should_return_e_when_user_enters_e(self):
-        from forest import Interpreter
         interpreter = Interpreter("echo<<e>>")
         self.assertEqual(interpreter.response(), "e")
 
     def test_interpreter_should_return_A_when_user_enters_A(self):
-        from forest import Interpreter
         interpreter = Interpreter("echo<<A>>")
         self.assertEqual(interpreter.response(), "A")
 
     def test_interpreter_should_return_Exception_when_user_enters_4(self):
-        from forest import Interpreter
         interpreter = Interpreter("echo<<4>>")
-    #    self.assertRaises(Exception, interpreter.response)
         self.assertEqual(interpreter.response(), "4")
 
     def test_interpreter_should_return_Hello_World(self):
-        from forest import Interpreter
         interpreter = Interpreter("echo<<Hello World!>>")
-    #    self.assertRaises(Exception, interpreter.response)
         self.assertEqual(interpreter.response(), "Hello World!")
 
-    # def test_interpreter_should_return_nothing_when_echo_with_empty_string(self):
-    #     from forest import Interpreter
-    #     interpreter = Interpreter("echo <<>>")
-    #     self.assertEqual(interpreter.response(), "")
+class TestTokeniser(unittest.TestCase):
 
-    # def test_interpreter_should_return_a_when_echo_with_a(self):
-    #     from forest import Interpreter
-    #     interpreter = Interpreter("echo <<a>>")
-    #     self.assertEqual(interpreter.response(), "a")
+    def test_method_returns_string_token_when_passed_e(self):
+        tokeniser = Tokeniser("echo<<e>>")
+        self.assertEqual(tokeniser.create_token(), {"ECHO" : "echo", "STRSTART" : "<<", "STRING" : "e", "STRSTOP" : ">>"})
 
-    # def test_interpreter_should_return_hello_when_echo_with_hello(self):
-    #     from forest import Interpreter
-    #     interpreter = Interpreter("echo <<hello>>")
-    #     self.assertEqual(interpreter.response(), "hello")
+    def test_method_returns_string_token_when_passed_a(self):
+        tokeniser = Tokeniser("echo<<a>>")
+        self.assertEqual(tokeniser.create_token(), {"ECHO" : "echo", "STRSTART" : "<<", "STRING" : "a", "STRSTOP" : ">>"})
 
-    # def test_interpreter_should_return_hello_world_when_echo_with_hello_world(self):
-    #     from forest import Interpreter
-    #     interpreter = Interpreter("echo <<Hello, world!>>")
-    #     self.assertEqual(interpreter.response(), "Hello, world!")
+    def test_method_returns_string_token_when_passed_caps_z(self):
+        tokeniser = Tokeniser("echo<<Z>>")
+        self.assertEqual(tokeniser.create_token(), {"ECHO" : "echo", "STRSTART" : "<<", "STRING" : "Z", "STRSTOP" : ">>"})
+
+    def test_method_returns_exception_when_passed_number(self):
+        tokeniser = Tokeniser("9")
+        self.assertRaises(Exception, tokeniser.create_token)
+
+    def test_method_raises_exception_when_strstart_is_not_present(self):
+        tokeniser = Tokeniser("echohello>>")
+        self.assertRaises(Exception, tokeniser.create_token)
+
+    def test_method_raises_exception_when_strstop_is_not_present(self):
+        tokeniser = Tokeniser("echo<<hello")
+        self.assertRaises(Exception, tokeniser.create_token)
+
+class TestParser(unittest.TestCase):
+    def test_something(self):
+        tokens = {"ECHO": 1, "STRSTART" : 2, "STRING" : 3, "STRSTOP" : 4}
+        parser = Parser(tokens)
+        self.assertEqual(parser.run_parser(), True)
+
+if __name__ == '__main__':
+    unittest.main()
