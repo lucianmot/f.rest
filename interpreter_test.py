@@ -3,6 +3,10 @@ from forest import Interpreter
 
 class TestInterpreter(unittest.TestCase):
 
+    def test_intepreter_should_be_initialized_with_text(self):
+        interpreter = Interpreter("echo")
+        self.assertEqual(interpreter.text, "echo")
+
     def test_interpreter_should_return_e_when_user_enters_e(self):
         interpreter = Interpreter("echo<<e>>")
         self.assertEqual(interpreter.response(), "e")
