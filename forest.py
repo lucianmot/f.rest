@@ -31,6 +31,8 @@ class Tokeniser(object):
         
         elif bool(re.search("true", self.text)) == True:
             return {"TRUE" : "true"}
+        elif bool(re.search("false", self.text)) == True:
+            return {"FALSE" : "false"}
         else:
             raise Exception("Error 3")
 

@@ -52,6 +52,10 @@ class TestTokeniser(unittest.TestCase):
     def test_tokeniser_recognises_that_true_is_true(self):
         tokeniser = Tokeniser("true")
         self.assertEqual(tokeniser.create_token(), {"TRUE" : "true"})
+    
+    def test_tokeniser_recognises_that_false_is_false(self):
+        tokeniser = Tokeniser("false")
+        self.assertEqual(tokeniser.create_token(), {"FALSE" : "false"})
 
 class TestParser(unittest.TestCase):
     def test_something(self):
