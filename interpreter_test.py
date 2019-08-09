@@ -1,5 +1,7 @@
 import unittest
 from forest import Interpreter
+from forest import Tokeniser
+from forest import Parser
 
 class TestInterpreter(unittest.TestCase):
 
@@ -23,8 +25,6 @@ class TestInterpreter(unittest.TestCase):
         interpreter = Interpreter("echo<<Hello World!>>")
         self.assertEqual(interpreter.response(), "Hello World!")
 
-from forest import Tokeniser
-
 class TestTokeniser(unittest.TestCase):
 
     def test_method_returns_string_token_when_passed_e(self):
@@ -43,13 +43,15 @@ class TestTokeniser(unittest.TestCase):
         tokeniser = Tokeniser("9")
         self.assertRaises(Exception, tokeniser.create_token)
 
-from forest import Parser
+    def test_method_raises_exception_when_strstart_is_not_present(self):
+        tokeniser = Tokeniser("echohello>>")
+        self.assertRaises(Exception, tokeniser.create_token)
 
 class TestParser(unittest.TestCase):
     def test_something(self):
         tokens = {"ECHO": 1, "STRSTART" : 2, "STRING" : 3, "STRSTOP" : 4}
         parser = Parser(tokens)
         self.assertEqual(parser.run_parser(), True)
-        
+
 if __name__ == '__main__':
     unittest.main()
