@@ -36,12 +36,10 @@ class Tokeniser(object):
 class Parser(object):
     def __init__(self, tokens):
         self.tokens = tokens
-        self.parse_dict = [
-            ["ECHO", "STRSTART", "STRING", "STRSTOP"],
-            ["ECHO", "INTEGER"]
-            ]
+        self.grammar_rule_1 = ["ECHO", "STRSTART", "STRING", "STRSTOP"]
+        self.grammar_rule_2 = ["ECHO", "INTEGER"]
 
-    def keytify_tokens(self):
+    def user_input_tokens(self):
         parse_keys = []
         for key in self.tokens:
             parse_keys.append(key)
@@ -49,9 +47,9 @@ class Parser(object):
         return parse_keys
 
     def run_parser(self):
-        if(self.parse_dict[0] == self.keytify_tokens()):
+        if(self.grammar_rule_1 == self.user_input_tokens()):
             return True
-        elif(self.parse_dict[1] == self.keytify_tokens()):
+        elif(self.grammar_rule_2 == self.user_input_tokens()):
             return True
         else:
             raise Exception("Syntax Error")
