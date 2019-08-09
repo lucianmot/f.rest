@@ -48,6 +48,10 @@ class TestTokeniser(unittest.TestCase):
     def test_method_raises_exception_when_strstop_is_not_present(self):
         tokeniser = Tokeniser("echo<<hello")
         self.assertRaises(Exception, tokeniser.create_token)
+    
+    def test_tokeniser_recognises_that_true_is_true(self):
+        tokeniser = Tokeniser("true")
+        self.assertEqual(tokeniser.create_token(), {"TRUE" : "true"})
 
 class TestParser(unittest.TestCase):
     def test_something(self):

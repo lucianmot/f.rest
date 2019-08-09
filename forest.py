@@ -28,7 +28,9 @@ class Tokeniser(object):
                     middle = restofstr[2:-2]
                     strstop = restofstr[-2:]
                     return {"ECHO": echo, "STRSTART" : strstart, "STRING" : middle, "STRSTOP" : strstop}
-                 
+        
+        elif bool(re.search("true", self.text)) == True:
+            return {"TRUE" : "true"}
         else:
             raise Exception("Error 3")
 
