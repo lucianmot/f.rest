@@ -37,7 +37,7 @@ class Parser(object):
     def __init__(self, tokens):
         self.tokens = tokens
         self.grammar_rule_1 = GrammarRule("grammar_rule_1",["ECHO", "STRSTART", "STRING", "STRSTOP"])
-        self.grammar_rule_2 = GrammarRule("grammar_rule_1",["ECHO", "INTEGER"])
+        self.grammar_rule_2 = GrammarRule("grammar_rule_2",["ECHO", "INTEGER"])
         self.rules = [self.grammar_rule_1, self.grammar_rule_2]
 
     def user_input_tokens(self):
@@ -49,9 +49,9 @@ class Parser(object):
 
     def match_grammar_rule(self):
         if(self.rules[0].rule == self.user_input_tokens()):
-            return "grammar_rule_1"
+            return self.rules[0].rule_name
         elif(self.rules[1].rule == self.user_input_tokens()):
-            return "grammar_rule_2"
+            return self.rules[1].rule_name
         else:
             raise Exception("Syntax Error")
 
