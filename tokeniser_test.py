@@ -22,4 +22,12 @@ class TestTokeniser(unittest.TestCase):
         tokeniser = Tokeniser("echo<<Hello Test!>>true5 ")
         self.assertEqual(tokeniser.create_tokens(), [{"ECHO" : "echo"}, {"BOOLEAN" : "true"}, {"INTEGER" : "5"}, {"WHITESPACE" : " "}, {"STRSTART" : "<<"}, {"STRSTOP" : ">>"}, {"STRING_CONTENT" : "Hello Test!"}])
     
-
+    def test_tokeniser_recognises_that_true_is_true(self):
+        from forest import Tokeniser
+        tokeniser = Tokeniser("true")
+        self.assertEqual(tokeniser.create_tokens(), [{"BOOLEAN" : "true"}])
+        
+    def test_tokeniser_recognises_that_false_is_false(self):
+        from forest import Tokeniser
+        tokeniser = Tokeniser("false")
+        self.assertEqual(tokeniser.create_tokens(), [{"BOOLEAN" : "false"}])
