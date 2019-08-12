@@ -23,6 +23,10 @@ class TestInterpreter(unittest.TestCase):
         interpreter = Interpreter("echo<<Hello World!>>")
         self.assertEqual(interpreter.response(), "Hello World!")
 
+    def test_interpreter_should_raise_exception_when_invalid_syntax(self):
+        interpreter = Interpreter("Hello")
+        self.assertRaises(Exception, interpreter.response)
+
 class TestTokeniser(unittest.TestCase):
 
     def test_method_returns_string_token_when_passed_e(self):

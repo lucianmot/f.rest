@@ -7,6 +7,7 @@ class Interpreter(object):
     def response(self):
         tokeniser = Tokeniser(self.text)
         token = tokeniser.create_token()
+        parser = Parser(token)
         return token.get("STRING")
 
 
