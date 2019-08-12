@@ -8,8 +8,15 @@ class Interpreter(object):
         tokeniser = Tokeniser(self.text)
         token = tokeniser.create_token()
         parser = Parser(token)
-        return token.get("STRING")
+        parser.match_grammar_rule()
+        ast_output = parser.create_ast_for_rule_1()
+        return self.visit_tree(ast_output)
+        
+    def visit_tree(self, ast_output):
+        return self.visit_ast_echo(ast_output)
 
+    def visit_ast_echo(self, ast_echo_node):
+        return ast_echo_node.expr.value
 
 class Tokeniser(object):
     def __init__(self, text):

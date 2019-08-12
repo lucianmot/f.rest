@@ -2,7 +2,6 @@ import unittest
 from forest import Interpreter, Tokeniser, Parser, ASTString, ASTEcho
 
 class TestInterpreter(unittest.TestCase):
-
     def test_intepreter_should_be_initialized_with_text(self):
         interpreter = Interpreter("echo")
         self.assertEqual(interpreter.text, "echo")
@@ -26,6 +25,20 @@ class TestInterpreter(unittest.TestCase):
     def test_interpreter_should_raise_exception_when_invalid_syntax(self):
         interpreter = Interpreter("Hello")
         self.assertRaises(Exception, interpreter.response)
+
+    def test_interpreter_visit_tree_should_return_user_output(self):
+        interpreter = Interpreter("")
+        tokens = {"ECHO": "echo", "STRSTART" : "<<", "STRING" : "Hello World!", "STRSTOP" : ">>"}
+        parser = Parser(tokens)
+        ast_output = parser.create_ast_for_rule_1()
+        self.assertEqual(interpreter.visit_tree(ast_output), "Hello World!")
+
+    def test_interpreter_visit_tree_should_return_more_user_output(self):
+        interpreter = Interpreter("")
+        tokens = {"ECHO": "echo", "STRSTART" : "<<", "STRING" : "Hello Rangers!", "STRSTOP" : ">>"}
+        parser = Parser(tokens)
+        ast_output = parser.create_ast_for_rule_1()
+        self.assertEqual(interpreter.visit_tree(ast_output), "Hello Rangers!")
 
 class TestTokeniser(unittest.TestCase):
 
