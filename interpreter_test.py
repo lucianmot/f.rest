@@ -1,5 +1,5 @@
 import unittest
-from forest import Interpreter, Tokeniser, Parser
+from forest import Interpreter, Tokeniser, Parser, ASTString, ASTEcho
 
 class TestInterpreter(unittest.TestCase):
 
@@ -70,6 +70,15 @@ class TestParser(unittest.TestCase):
         parser = Parser(tokens)
         self.assertRaises(Exception, parser.match_grammar_rule)
 
+class TestAST(unittest.TestCase):
+    def test_AST_String_node_is_created_with_the_string_value(self):
+        string_ast_node = ASTString("Hello World")
+        self.assertEqual(string_ast_node.value, "Hello World")
+
+    def test_AST_Echo_node_is_created_with_the_child_string_node_attached(self):
+        string_ast_node = ASTString("Hello World")
+        echo_ast_node = ASTEcho(string_ast_node)
+        self.assertEqual(echo_ast_node.expr.value, "Hello World")
 
 if __name__ == '__main__':
     unittest.main()

@@ -57,3 +57,11 @@ class GrammarRule(object):
     def __init__(self, rule_name, rule):
         self.rule_name = rule_name
         self.rule = rule
+
+class ASTString(object):
+    def __init__(self, string):
+        self.value = string
+
+class ASTEcho(object):
+    def __init__(self, expr):
+        self.expr = expr
