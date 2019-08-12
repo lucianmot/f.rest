@@ -51,13 +51,14 @@ $ python3
 ```
 ```python
 >>> from forest import Interpreter
->>> interpreter = Interpreter("echo<<Hello World!>>") 
+>>> interpreter = Interpreter("echo<<Hello World!>>")
 >>> interpreter.response()
+>>> 'Forest says: Hello World!'
 ```
 
 Try putting your own message between the `<<tree tops>>`!  
 
-Take care, don't start the fire. 
+Take care, don't start the fire.
 
 
 ## Design

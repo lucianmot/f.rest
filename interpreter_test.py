@@ -8,19 +8,19 @@ class TestInterpreter(unittest.TestCase):
 
     def test_interpreter_should_return_e_when_user_enters_e(self):
         interpreter = Interpreter("echo<<e>>")
-        self.assertEqual(interpreter.response(), "e")
+        self.assertEqual(interpreter.response(), "Forest says: e")
 
     def test_interpreter_should_return_A_when_user_enters_A(self):
         interpreter = Interpreter("echo<<A>>")
-        self.assertEqual(interpreter.response(), "A")
+        self.assertEqual(interpreter.response(), "Forest says: A")
 
     def test_interpreter_should_return_Exception_when_user_enters_4(self):
         interpreter = Interpreter("echo<<4>>")
-        self.assertEqual(interpreter.response(), "4")
+        self.assertEqual(interpreter.response(), "Forest says: 4")
 
     def test_interpreter_should_return_Hello_World(self):
         interpreter = Interpreter("echo<<Hello World!>>")
-        self.assertEqual(interpreter.response(), "Hello World!")
+        self.assertEqual(interpreter.response(), "Forest says: Hello World!")
 
     def test_interpreter_should_raise_exception_when_invalid_syntax(self):
         interpreter = Interpreter("Hello")
@@ -31,14 +31,14 @@ class TestInterpreter(unittest.TestCase):
         tokens = {"ECHO": "echo", "STRSTART" : "<<", "STRING" : "Hello World!", "STRSTOP" : ">>"}
         parser = Parser(tokens)
         ast_output = parser.create_ast_for_rule_1()
-        self.assertEqual(interpreter.visit_tree(ast_output), "Hello World!")
+        self.assertEqual(interpreter.visit_tree(ast_output), "Forest says: Hello World!")
 
     def test_interpreter_visit_tree_should_return_more_user_output(self):
         interpreter = Interpreter("")
         tokens = {"ECHO": "echo", "STRSTART" : "<<", "STRING" : "Hello Rangers!", "STRSTOP" : ">>"}
         parser = Parser(tokens)
         ast_output = parser.create_ast_for_rule_1()
-        self.assertEqual(interpreter.visit_tree(ast_output), "Hello Rangers!")
+        self.assertEqual(interpreter.visit_tree(ast_output), "Forest says: Hello Rangers!")
 
 class TestTokeniser(unittest.TestCase):
 
