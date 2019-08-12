@@ -52,6 +52,9 @@ class Parser(object):
                 return rule.rule_name
         raise Exception("Syntax Error")
 
+    def create_ast_for_rule_1(self):
+        return ASTEcho(ASTString(self.tokens["STRING"]))
+
 
 class GrammarRule(object):
     def __init__(self, rule_name, rule):

@@ -70,6 +70,24 @@ class TestParser(unittest.TestCase):
         parser = Parser(tokens)
         self.assertRaises(Exception, parser.match_grammar_rule)
 
+    def test_create_ast_echo_for_grammar_rule_1(self):
+        tokens = {"ECHO": "echo", "STRSTART" : "<<", "STRING" : "mystring", "STRSTOP" : ">>"}
+        parser = Parser(tokens)
+        ast_output = parser.create_ast_for_rule_1()
+        self.assertIsInstance(ast_output, ASTEcho)
+
+    def test_create_ast_echo_with_child_for_grammar_rule_1(self):
+        tokens = {"ECHO": "echo", "STRSTART" : "<<", "STRING" : "mystring", "STRSTOP" : ">>"}
+        parser = Parser(tokens)
+        ast_output = parser.create_ast_for_rule_1()
+        self.assertIsInstance(ast_output.expr, ASTString)
+
+    def test_create_ast_echo_with_child_string_with_value_for_grammar_rule_1(self):
+        tokens = {"ECHO": "echo", "STRSTART" : "<<", "STRING" : "anotherstring", "STRSTOP" : ">>"}
+        parser = Parser(tokens)
+        ast_output = parser.create_ast_for_rule_1()
+        self.assertEqual(ast_output.expr.value, "anotherstring")
+
 class TestAST(unittest.TestCase):
     def test_AST_String_node_is_created_with_the_string_value(self):
         string_ast_node = ASTString("Hello World")
