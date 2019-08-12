@@ -31,3 +31,8 @@ class TestTokeniser(unittest.TestCase):
         from forest import Tokeniser
         tokeniser = Tokeniser("false")
         self.assertEqual(tokeniser.create_tokens(), [{"BOOLEAN" : "false"}])
+
+    def test_method_returns_integer_item_when_passed_number(self):
+        from forest import Tokeniser
+        tokeniser = Tokeniser("9")
+        self.assertEqual(tokeniser.create_tokens(), [{"INTEGER" : '9'}])
