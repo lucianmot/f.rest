@@ -58,6 +58,10 @@ class TestTokeniser(unittest.TestCase):
         tokeniser = Tokeniser("false")
         self.assertEqual(tokeniser.create_tokens(), [{"BOOLEAN" : "false"}])
 
+    def test_tokeniser_recognises_all_tokens_in_text(self):
+        tokeniser = Tokeniser("echo<<Hello Test!>>true5 ")
+        self.assertEqual(tokeniser.create_tokens(), [{"ECHO" : "echo"}, {"BOOLEAN" : "true"}, {"INTEGER" : "5"}, {"WHITESPACE" : " "}, {"STRSTART" : "<<"}, {"STRSTOP" : ">>"}, {"STRING_CONTENT" : "Hello Test!"}])
+
 class TestParser(unittest.TestCase):
     def test_something(self):
         tokens = {"ECHO": 1, "STRSTART" : 2, "STRING" : 3, "STRSTOP" : 4}
