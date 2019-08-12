@@ -7,8 +7,16 @@ class Interpreter(object):
     def response(self):
         tokeniser = Tokeniser(self.text)
         token = tokeniser.create_token()
-        return token.get("STRING")
+        parser = Parser(token)
+        parser.match_grammar_rule()
+        ast_output = parser.create_ast_for_rule_1()
+        return self.visit_tree(ast_output)
 
+    def visit_tree(self, ast_output):
+        return self.visit_ast_echo(ast_output)
+
+    def visit_ast_echo(self, ast_echo_node):
+        return "Forest says: " + ast_echo_node.expr.value
 
 class Tokeniser(object):
     def __init__(self, text):
@@ -52,8 +60,19 @@ class Parser(object):
                 return rule.rule_name
         raise Exception("Syntax Error")
 
+    def create_ast_for_rule_1(self):
+        return ASTEcho(ASTString(self.tokens["STRING"]))
+
 
 class GrammarRule(object):
     def __init__(self, rule_name, rule):
         self.rule_name = rule_name
         self.rule = rule
+
+class ASTString(object):
+    def __init__(self, string):
+        self.value = string
+
+class ASTEcho(object):
+    def __init__(self, expr):
+        self.expr = expr
