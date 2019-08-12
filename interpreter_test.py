@@ -15,7 +15,7 @@ class TestInterpreter(unittest.TestCase):
         interpreter = Interpreter("echo<<A>>")
         self.assertEqual(interpreter.response(), "A")
 
-    def test_interpreter_should_return_Exception_when_user_enters_4(self):
+    def test_interpreter_should_return_integer_when_user_enters_4(self):
         interpreter = Interpreter("echo<<4>>")
         self.assertEqual(interpreter.response(), "4")
 
@@ -27,35 +27,36 @@ class TestTokeniser(unittest.TestCase):
 
     def test_method_returns_string_token_when_passed_e(self):
         tokeniser = Tokeniser("echo<<e>>")
-        self.assertEqual(tokeniser.create_token(), {"ECHO" : "echo", "STRSTART" : "<<", "STRING" : "e", "STRSTOP" : ">>"})
+        self.assertEqual(tokeniser.create_tokens(), [{"ECHO" : "echo"}, {"STRSTART" : "<<"}, {"STRSTOP" : ">>"}, {"STRING_CONTENT" : "e"}])
 
     def test_method_returns_string_token_when_passed_a(self):
         tokeniser = Tokeniser("echo<<a>>")
-        self.assertEqual(tokeniser.create_token(), {"ECHO" : "echo", "STRSTART" : "<<", "STRING" : "a", "STRSTOP" : ">>"})
+        self.assertEqual(tokeniser.create_tokens(), [{"ECHO" : "echo"}, {"STRSTART" : "<<"}, {"STRSTOP" : ">>"}, {"STRING_CONTENT" : "a"}])
 
     def test_method_returns_string_token_when_passed_caps_z(self):
         tokeniser = Tokeniser("echo<<Z>>")
-        self.assertEqual(tokeniser.create_token(), {"ECHO" : "echo", "STRSTART" : "<<", "STRING" : "Z", "STRSTOP" : ">>"})
+        self.assertEqual(tokeniser.create_tokens(), [{"ECHO" : "echo"}, {"STRSTART" : "<<"}, {"STRSTOP" : ">>"}, {"STRING_CONTENT" : "Z"}])
 
-    def test_method_returns_exception_when_passed_number(self):
+    def test_method_returns_integer_item_when_passed_number(self):
         tokeniser = Tokeniser("9")
-        self.assertRaises(Exception, tokeniser.create_token)
+        self.assertEqual(tokeniser.create_tokens(), [{"INTEGER" : '9'}])
 
-    def test_method_raises_exception_when_strstart_is_not_present(self):
-        tokeniser = Tokeniser("echohello>>")
-        self.assertRaises(Exception, tokeniser.create_token)
+    # THOSE EXCEPTIONS SHOULD LIVE IN THE INTERPRETER
+    #def test_method_raises_exception_when_strstart_is_not_present(self):
+    #    tokeniser = Tokeniser("echohello>>")
+    #    self.assertRaises(Exception, tokeniser.create_token)
 
-    def test_method_raises_exception_when_strstop_is_not_present(self):
-        tokeniser = Tokeniser("echo<<hello")
-        self.assertRaises(Exception, tokeniser.create_token)
+    #def test_method_raises_exception_when_strstop_is_not_present(self):
+    #    tokeniser = Tokeniser("echo<<hello")
+    #    self.assertRaises(Exception, tokeniser.create_token)
     
     def test_tokeniser_recognises_that_true_is_true(self):
         tokeniser = Tokeniser("true")
-        self.assertEqual(tokeniser.create_token(), {"TRUE" : "true"})
+        self.assertEqual(tokeniser.create_tokens(), [{"BOOLEAN" : "true"}])
     
     def test_tokeniser_recognises_that_false_is_false(self):
         tokeniser = Tokeniser("false")
-        self.assertEqual(tokeniser.create_token(), {"FALSE" : "false"})
+        self.assertEqual(tokeniser.create_tokens(), [{"BOOLEAN" : "false"}])
 
 class TestParser(unittest.TestCase):
     def test_something(self):

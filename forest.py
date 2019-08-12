@@ -1,52 +1,41 @@
 import re
 
+TOKENS =    [re.compile(r'(?P<ECHO>echo)'), re.compile(r'(?P<BOOLEAN>true|false)'), re.compile(r'(?P<INTEGER>\d)'),
+            re.compile(r'(?P<WHITESPACE>\s)'), re.compile(r'(?P<STRSTART><<)'), re.compile(r'(?P<STRSTOP>>>)'),
+            re.compile(r'(?:<<)(?P<STRING_CONTENT>.+)(?:>>)')]
+
 class Interpreter(object):
     def __init__(self, text):
         self.text = text
 
     def response(self):
         tokeniser = Tokeniser(self.text)
-        token = tokeniser.create_token()
-        return token.get("STRING")
+        tokens = tokeniser.create_tokens()
+        for token in tokens:
+            if token.get('STRING_CONTENT') != None:
+                return token.get('STRING_CONTENT')
 
 
 class Tokeniser(object):
     def __init__(self, text):
         self.text = text
 
+# checks if input starts with echo - delete if not used
     def isecho(self):
         if bool(re.match("echo", self.text)) == True:
             return True
         else:
             return False
 
-    def tokenise_echo(self):
-        echo = self.text[0:4]
-        restofstr = self.text[4:]
-        if bool(re.match("<<", restofstr)) == False:
-            raise Exception("Error 1")
-        elif bool(re.match("<<", restofstr)) == True:
-            if bool(re.search(">>", restofstr)) == False:
-                raise Exception("Error 2")
-            elif bool(re.search(">>", restofstr)) == True:
-                strstart = restofstr[0:2]
-                middle = restofstr[2:-2]
-                strstop = restofstr[-2:]
-                return {"ECHO": echo, "STRSTART" : strstart, "STRING" : middle, "STRSTOP" : strstop}
-            else: 
-                raise Exception('Exception 7') 
+    def create_tokens(self):
+        results = []
+        for token in TOKENS:
+            match_attempt = token.search(self.text)
+            if match_attempt == None:
+                continue
+            results.append(match_attempt.groupdict())
 
-
-    def create_token(self):
-        if self.isecho() == True:
-            return self.tokenise_echo()
-        elif bool(re.search("true", self.text)) == True:
-            return {"TRUE" : "true"}
-        elif bool(re.search("false", self.text)) == True:
-            return {"FALSE" : "false"}
-        else:
-            raise Exception("Error 3")
-
+        return results 
 
 class Parser(object):
     def __init__(self, tokens):
