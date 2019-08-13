@@ -57,6 +57,11 @@ class TestParser(unittest.TestCase):
         parser = Parser(tokens)
         self.assertEqual(parser.match_grammar_rule(), "grammar_rule_2")
 
+    def test_valid_sequence_of_stings_and_equal_comparator_tokens_returns_grammar_rule3(self):
+        tokens = [{"STRING_CONTENT": "Hello Forest"}, {"EQUALS": "OvO"}, {"STRING_CONTENT": "Hello Forest"}]
+        parser = Parser(tokens)
+        self.assertEqual(parser.match_grammar_rule(), "grammar_rule_3")
+
     def test_invalid_sequence_of_integer_tokens_returns_false(self):
         tokens = [{"INTEGER": 8}, {"ECHO": "echo"}]
         parser = Parser(tokens)
@@ -106,12 +111,12 @@ class TestTokeniser(unittest.TestCase):
         from forest import Tokeniser
         tokeniser = Tokeniser("echo^<<Hello Test!>>")
         self.assertEqual(tokeniser.create_tokens(), [{"ECHO" : "echo"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "Hello Test!"}, {"STRSTOP" : ">>"}])
-    
+
     def test_tokeniser_recognises_that_true_is_true(self):
         from forest import Tokeniser
         tokeniser = Tokeniser("true")
         self.assertEqual(tokeniser.create_tokens(), [{"BOOLEAN" : "true"}])
-        
+
     def test_tokeniser_recognises_that_false_is_false(self):
         from forest import Tokeniser
         tokeniser = Tokeniser("false")
@@ -131,13 +136,13 @@ class TestTokeniser(unittest.TestCase):
         from forest import Tokeniser
         tokeniser = Tokeniser("true^4")
         self.assertEqual(tokeniser.split_input(), ["true", "4"])
-    
+
     def test_method_returns_string_token_when_passed_a_longer_string(self):
         from forest import Tokeniser
         tokeniser = Tokeniser("<<a lot of text>>")
         self.assertEqual(tokeniser.create_tokens(), [{"STRSTART" : "<<"}, {"STRING_CONTENT" : "a lot of text"}, {"STRSTOP" : ">>"}])
-        
-                
+
+
 
 if __name__ == '__main__':
     unittest.main()
