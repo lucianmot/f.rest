@@ -151,7 +151,12 @@ class TestTokeniser(unittest.TestCase):
         from forest import Tokeniser
         tokeniser = Tokeniser("<<this>>^OvO^<<that>>")
         self.assertEqual(tokeniser.create_tokens(), [{"STRSTART" : "<<"}, {"STRING_CONTENT" : "this"}, {"STRSTOP" : ">>"}, {"EQUALS" : "OvO"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "that"}, {"STRSTOP" : ">>"}])
+
+    def test_method_returns_dead_owl_when_passed_in_with_bools(self):
+        from forest import Tokeniser
+        tokeniser = Tokeniser("true^XvX^false")
+        self.assertEqual(tokeniser.create_tokens(), [{"BOOLEAN" : "true"}, {"NOT_EQUAL" : "XvX"}, {"BOOLEAN" : "false"}])
     
-        
+
 if __name__ == '__main__':
     unittest.main()
