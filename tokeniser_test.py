@@ -46,3 +46,7 @@ class TestTokeniser(unittest.TestCase):
         from forest import Tokeniser
         tokeniser = Tokeniser("<<a lot of text>>")
         self.assertEqual(tokeniser.create_tokens(), [{"STRSTART" : "<<"}, {"STRING_CONTENT" : "a lot of text"}, {"STRSTOP" : ">>"}])
+
+    if __name__ == '__main__':
+        unittest.main()
+        
