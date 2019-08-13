@@ -172,6 +172,11 @@ class TestTokeniser(unittest.TestCase):
         tokeniser = Tokeniser("(*)>")
         self.assertEqual(tokeniser.create_tokens(), [{"MODULUS" : "(*)>"}])
 
+    def test_method_returns_crow_operator_when_passed_in_with_integers(self):
+        from forest import Tokeniser
+        tokeniser = Tokeniser("5^(*)>^2")
+        self.assertEqual(tokeniser.create_tokens(), [{"INTEGER" : "5"}, {"MODULUS" : "(*)>"}, {"INTEGER" : "2"}])
+
 
 if __name__ == '__main__':
     unittest.main()
