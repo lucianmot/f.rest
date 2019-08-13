@@ -65,8 +65,8 @@ EXPLORE FOREST_FLOWERS
 ### Reference
 
 | Forest | Forest explicit | Human |   
-| ___ | ___ | ___ | 
+| ___ | ___ | ___ |   
 | OvO | Owl operator | == comparison |  
 | XvX | Dead owl operator | != not equal |    
-| (*)> | Crow operator | % modulo | 
-| ^._.^ | Bat operator | ??? |    
+| (*)> | Crow operator | % modulo |   
+| ^._.^ | Bat operator | ??? |      
