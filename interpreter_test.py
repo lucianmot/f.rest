@@ -137,7 +137,15 @@ class TestTokeniser(unittest.TestCase):
         tokeniser = Tokeniser("<<a lot of text>>")
         self.assertEqual(tokeniser.create_tokens(), [{"STRSTART" : "<<"}, {"STRING_CONTENT" : "a lot of text"}, {"STRSTOP" : ">>"}])
         
-                
+    def test_method_returns_comparison_token_for_owl_operator(self):
+        from forest import Tokeniser
+        tokeniser = Tokeniser("OvO")
+        self.assertEqual(tokeniser.create_tokens(), [{"EQUALS" : "OvO"}])        
 
+    def test_method_returns_comparison_token_and_bool_for_owl_operator_with_bools(self):
+        from forest import Tokeniser
+        tokeniser = Tokeniser("true^OvO^false")
+        self.assertEqual(tokeniser.create_tokens(), [{"BOOLEAN" : "true"}, {"EQUALS" : "OvO"}, {"BOOLEAN" : "false"}])        
+    
 if __name__ == '__main__':
     unittest.main()
