@@ -1,5 +1,5 @@
 import unittest
-from forest import Interpreter, Tokeniser, Parser, ASTString, ASTEcho
+from forest import Interpreter, Tokeniser, Parser, ASTString, ASTEcho, ASTEquals
 
 class TestInterpreter(unittest.TestCase):
     def test_intepreter_should_be_initialized_with_text(self):
@@ -57,6 +57,11 @@ class TestParser(unittest.TestCase):
         parser = Parser(tokens)
         self.assertEqual(parser.match_grammar_rule(), "grammar_rule_2")
 
+    def test_valid_sequence_of_stings_and_equal_comparator_tokens_returns_grammar_rule3(self):
+        tokens = [{"STRING_CONTENT": "Hello Forest"}, {"EQUALS": "OvO"}, {"STRING_CONTENT": "Hello Forest"}]
+        parser = Parser(tokens)
+        self.assertEqual(parser.match_grammar_rule(), "grammar_rule_3")
+
     def test_invalid_sequence_of_integer_tokens_returns_false(self):
         tokens = [{"INTEGER": 8}, {"ECHO": "echo"}]
         parser = Parser(tokens)
@@ -79,6 +84,24 @@ class TestParser(unittest.TestCase):
         parser = Parser(tokens)
         ast_output = parser.create_ast_for_rule_1()
         self.assertEqual(ast_output.expr.value, "anotherstring")
+
+    def test_create_ast_equals_for_grammar_rule_3(self):
+        tokens = [{"STRING_CONTENT": "Hello Forest"}, {"EQUALS": "OvO"}, {"STRING_CONTENT": "Hello Forest"}]
+        parser = Parser(tokens)
+        ast_output = parser.create_ast_for_rule_3()
+        self.assertIsInstance(ast_output, ASTEquals)
+
+    def test_create_ast_equals_for_grammar_rule_3_string_value_operand_1(self):
+        tokens = [{"STRING_CONTENT": "Hello Forest"}, {"EQUALS": "OvO"}, {"STRING_CONTENT": "Hello Forest again"}]
+        parser = Parser(tokens)
+        ast_output = parser.create_ast_for_rule_3()
+        self.assertEqual(ast_output.operand1.value, "Hello Forest")
+
+    def test_create_ast_equals_for_grammar_rule_3_string_value_operand_3(self):
+        tokens = [{"STRING_CONTENT": "Hello Forest"}, {"EQUALS": "OvO"}, {"STRING_CONTENT": "Hello Forest again"}]
+        parser = Parser(tokens)
+        ast_output = parser.create_ast_for_rule_3()
+        self.assertEqual(ast_output.operand2.value, "Hello Forest again")
 
 class TestAST(unittest.TestCase):
     def test_AST_String_node_is_created_with_the_string_value(self):
@@ -106,12 +129,12 @@ class TestTokeniser(unittest.TestCase):
         from forest import Tokeniser
         tokeniser = Tokeniser("echo^<<Hello Test!>>")
         self.assertEqual(tokeniser.create_tokens(), [{"ECHO" : "echo"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "Hello Test!"}, {"STRSTOP" : ">>"}])
-    
+
     def test_tokeniser_recognises_that_true_is_true(self):
         from forest import Tokeniser
         tokeniser = Tokeniser("true")
         self.assertEqual(tokeniser.create_tokens(), [{"BOOLEAN" : "true"}])
-        
+
     def test_tokeniser_recognises_that_false_is_false(self):
         from forest import Tokeniser
         tokeniser = Tokeniser("false")
@@ -131,7 +154,7 @@ class TestTokeniser(unittest.TestCase):
         from forest import Tokeniser
         tokeniser = Tokeniser("true^4")
         self.assertEqual(tokeniser.split_input(), ["true", "4"])
-    
+
     def test_method_returns_string_token_when_passed_a_longer_string(self):
         from forest import Tokeniser
         tokeniser = Tokeniser("<<a lot of text>>")

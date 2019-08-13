@@ -36,7 +36,7 @@ class Tokeniser(object):
                     continue
                 results.append(match_attempt.groupdict())
 
-        return results 
+        return results
 
     def split_input(self):
         return self.text.split('^')
@@ -46,14 +46,15 @@ class Parser(object):
         self.tokens = tokens
         self.grammar_rule_1 = GrammarRule("grammar_rule_1",["ECHO", "STRSTART", "STRING_CONTENT", "STRSTOP"])
         self.grammar_rule_2 = GrammarRule("grammar_rule_2",["ECHO", "INTEGER"])
-        self.rules = [self.grammar_rule_1, self.grammar_rule_2]
+        self.grammar_rule_3 = GrammarRule("grammar_rule_3",["STRING_CONTENT", "EQUALS", "STRING_CONTENT"])
+        self.rules = [self.grammar_rule_1, self.grammar_rule_2, self.grammar_rule_3]
 
     def user_input_tokens(self):
         parse_keys = []
         for item in self.tokens:
             for key in item.keys():
                 parse_keys.append(key)
-        
+
         return parse_keys
 
     def match_grammar_rule(self):
@@ -65,6 +66,11 @@ class Parser(object):
     def create_ast_for_rule_1(self):
         test = self.get_token_by_key()
         return ASTEcho(ASTString(test))
+
+    def create_ast_for_rule_3(self):
+        str_token1 = self.tokens[0]
+        str_token3 = self.tokens[2]
+        return ASTEquals(ASTString(str_token1["STRING_CONTENT"]), ASTString(str_token3["STRING_CONTENT"]))
 
     def get_token_by_key(self):
         for item in self.tokens:
@@ -83,3 +89,8 @@ class ASTString(object):
 class ASTEcho(object):
     def __init__(self, expr):
         self.expr = expr
+
+class ASTEquals(object):
+    def __init__(self, operand1, operand2):
+        self.operand1 = operand1
+        self.operand2 = operand2
