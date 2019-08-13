@@ -40,45 +40,6 @@ class TestInterpreter(unittest.TestCase):
         ast_output = parser.create_ast_for_rule_1()
         self.assertEqual(interpreter.visit_tree(ast_output), "Forest says: Hello Rangers!")
 
-class TestTokeniser(unittest.TestCase):
-
-    def test_method_returns_string_token_when_passed_e(self):
-        tokeniser = Tokeniser("echo<<e>>")
-        self.assertEqual(tokeniser.create_tokens(), [{"ECHO" : "echo"}, {"STRSTART" : "<<"}, {"STRSTOP" : ">>"}, {"STRING_CONTENT" : "e"}])
-
-    def test_method_returns_string_token_when_passed_a(self):
-        tokeniser = Tokeniser("echo<<a>>")
-        self.assertEqual(tokeniser.create_tokens(), [{"ECHO" : "echo"}, {"STRSTART" : "<<"}, {"STRSTOP" : ">>"}, {"STRING_CONTENT" : "a"}])
-
-    def test_method_returns_string_token_when_passed_caps_z(self):
-        tokeniser = Tokeniser("echo<<Z>>")
-        self.assertEqual(tokeniser.create_tokens(), [{"ECHO" : "echo"}, {"STRSTART" : "<<"}, {"STRSTOP" : ">>"}, {"STRING_CONTENT" : "Z"}])
-
-    def test_method_returns_integer_item_when_passed_number(self):
-        tokeniser = Tokeniser("9")
-        self.assertEqual(tokeniser.create_tokens(), [{"INTEGER" : '9'}])
-
-    # THOSE EXCEPTIONS SHOULD LIVE IN THE INTERPRETER
-    #def test_method_raises_exception_when_strstart_is_not_present(self):
-    #    tokeniser = Tokeniser("echohello>>")
-    #    self.assertRaises(Exception, tokeniser.create_token)
-
-    #def test_method_raises_exception_when_strstop_is_not_present(self):
-    #    tokeniser = Tokeniser("echo<<hello")
-    #    self.assertRaises(Exception, tokeniser.create_token)
-    
-    def test_tokeniser_recognises_that_true_is_true(self):
-        tokeniser = Tokeniser("true")
-        self.assertEqual(tokeniser.create_tokens(), [{"BOOLEAN" : "true"}])
-    
-    def test_tokeniser_recognises_that_false_is_false(self):
-        tokeniser = Tokeniser("false")
-        self.assertEqual(tokeniser.create_tokens(), [{"BOOLEAN" : "false"}])
-
-    def test_tokeniser_recognises_all_tokens_in_text(self):
-        tokeniser = Tokeniser("echo<<Hello Test!>>true5 ")
-        self.assertEqual(tokeniser.create_tokens(), [{"ECHO" : "echo"}, {"BOOLEAN" : "true"}, {"INTEGER" : "5"}, {"WHITESPACE" : " "}, {"STRSTART" : "<<"}, {"STRSTOP" : ">>"}, {"STRING_CONTENT" : "Hello Test!"}])
-
 class TestParser(unittest.TestCase):
     def test_valid_sequence_of_string_tokens_returns_true(self):
         tokens = {"ECHO": "echo", "STRSTART" : "<<", "STRING" : "string", "STRSTOP" : ">>"}

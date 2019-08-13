@@ -1,8 +1,7 @@
 import re
 
-TOKENS =    [re.compile(r'(?P<ECHO>echo)'), re.compile(r'(?P<BOOLEAN>true|false)'), re.compile(r'(?P<INTEGER>\d)'),
-            re.compile(r'(?P<WHITESPACE>\s)'), re.compile(r'(?P<STRSTART><<)'), re.compile(r'(?P<STRSTOP>>>)'),
-            re.compile(r'(?:<<)(?P<STRING_CONTENT>.+)(?:>>)')]
+TOKENS =    [re.compile(r'(?P<ECHO>echo)'), re.compile(r'(?P<BOOLEAN>true|false)'), re.compile(r'(?P<INTEGER>\d)'),                 re.compile(r'(?P<STRSTART><<)'), re.compile(r'(?:<<)(?P<STRING_CONTENT>.+)(?:>>)'), 
+            re.compile(r'(?P<STRSTOP>>>)')]
 
 class Interpreter(object):
     def __init__(self, text):
@@ -26,22 +25,20 @@ class Tokeniser(object):
     def __init__(self, text):
         self.text = text
 
-# checks if input starts with echo - delete if not used
-    def isecho(self):
-        if bool(re.match("echo", self.text)) == True:
-            return True
-        else:
-            return False
-
     def create_tokens(self):
+        input_array = self.split_input()
         results = []
-        for token in TOKENS:
-            match_attempt = token.search(self.text)
-            if match_attempt == None:
-                continue
-            results.append(match_attempt.groupdict())
+        for item in input_array:
+            for token in TOKENS:
+                match_attempt = token.search(item)
+                if match_attempt == None:
+                    continue
+                results.append(match_attempt.groupdict())
 
         return results 
+
+    def split_input(self):
+        return self.text.split('^')
 
 class Parser(object):
     def __init__(self, tokens):
