@@ -61,3 +61,12 @@ EXPLORE FOREST_FLOWERS
 
 ```{WALK_IN_THE_CIRCLE_THROUGH_THE_FOREST : FOR }```
 ```{RUN_IN_THE_CIRCLE_THROUGH_THE_FOREST : WHILE }```
+
+### Reference
+
+| Forest | Forest explicit | Human |   
+| ___ | ___ | ___ | 
+| OvO | Owl operator | == comparison |  
+| XvX | Dead owl operator | != not equal |    
+| (*)> | Crow operator | % modulo | 
+| ^._.^ | Bat operator | ??? |    
