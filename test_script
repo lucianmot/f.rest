@@ -1,8 +1,8 @@
 #!/bin/bash
 echo '***** Tests *****'
 echo ' '
-python3 -m unittest interpreter_test.py tokeniser_test.py -v
-coverage run interpreter_test.py tokeniser_test.py
+python3 -m unittest interpreter_test.py -v
+coverage run interpreter_test.py
 coverage html
 echo ' '
 echo '***** Coverage *****'
