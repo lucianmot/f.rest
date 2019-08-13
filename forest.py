@@ -43,14 +43,16 @@ class Tokeniser(object):
 class Parser(object):
     def __init__(self, tokens):
         self.tokens = tokens
-        self.grammar_rule_1 = GrammarRule("grammar_rule_1",["ECHO", "STRSTART", "STRING", "STRSTOP"])
+        self.grammar_rule_1 = GrammarRule("grammar_rule_1",["ECHO", "STRSTART", "STRING_CONTENT", "STRSTOP"])
         self.grammar_rule_2 = GrammarRule("grammar_rule_2",["ECHO", "INTEGER"])
         self.rules = [self.grammar_rule_1, self.grammar_rule_2]
 
     def user_input_tokens(self):
         parse_keys = []
-        for key in self.tokens:
-            parse_keys.append(key)
+        for item in self.tokens:
+            for key in item.keys():
+                parse_keys.append(key)
+        
         return parse_keys
 
     def match_grammar_rule(self):
@@ -60,8 +62,13 @@ class Parser(object):
         raise Exception("Syntax Error")
 
     def create_ast_for_rule_1(self):
-        return ASTEcho(ASTString(self.tokens["STRING"]))
+        test = self.get_token_by_key()
+        return ASTEcho(ASTString(test))
 
+    def get_token_by_key(self):
+        for item in self.tokens:
+            if "STRING_CONTENT" in item:
+                return item["STRING_CONTENT"]
 
 class GrammarRule(object):
     def __init__(self, rule_name, rule):
