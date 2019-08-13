@@ -146,11 +146,27 @@ class TestTokeniser(unittest.TestCase):
         from forest import Tokeniser
         tokeniser = Tokeniser("true^OvO^false")
         self.assertEqual(tokeniser.create_tokens(), [{"BOOLEAN" : "true"}, {"EQUALS" : "OvO"}, {"BOOLEAN" : "false"}])        
+
     def test_method_returns_tokens_for_String_comparison(self):
         from forest import Tokeniser
         tokeniser = Tokeniser("<<this>>^OvO^<<that>>")
         self.assertEqual(tokeniser.create_tokens(), [{"STRSTART" : "<<"}, {"STRING_CONTENT" : "this"}, {"STRSTOP" : ">>"}, {"EQUALS" : "OvO"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "that"}, {"STRSTOP" : ">>"}])
-        print(tokeniser.create_tokens())
+
+    def test_method_returns_dead_owl_when_passed_in_with_bools(self):
+        from forest import Tokeniser
+        tokeniser = Tokeniser("7^XvX^8")
+        self.assertEqual(tokeniser.create_tokens(), [{"INTEGER" : "7"}, {"NOT_EQUAL" : "XvX"}, {"INTEGER" : "8"}])
+
+    def test_method_returns_dead_owl_when_passed_in_with_bools(self):
+        from forest import Tokeniser
+        tokeniser = Tokeniser("true^XvX^false")
+        self.assertEqual(tokeniser.create_tokens(), [{"BOOLEAN" : "true"}, {"NOT_EQUAL" : "XvX"}, {"BOOLEAN" : "false"}])
+
+    def test_method_returns_dead_owl_tokens_when_passed_with_strings(self):
+        from forest import Tokeniser
+        tokeniser = Tokeniser("<<Superman>>^XvX^<<Batman>>")
+        self.assertEqual(tokeniser.create_tokens(), [{"STRSTART" : "<<"}, {"STRING_CONTENT" : "Superman"}, {"STRSTOP" : ">>"}, {"NOT_EQUAL" : "XvX"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "Batman"}, {"STRSTOP" : ">>"}])
     
+
 if __name__ == '__main__':
     unittest.main()
