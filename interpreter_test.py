@@ -154,6 +154,11 @@ class TestTokeniser(unittest.TestCase):
 
     def test_method_returns_dead_owl_when_passed_in_with_bools(self):
         from forest import Tokeniser
+        tokeniser = Tokeniser("7^XvX^8")
+        self.assertEqual(tokeniser.create_tokens(), [{"INTEGER" : "7"}, {"NOT_EQUAL" : "XvX"}, {"INTEGER" : "8"}])
+
+    def test_method_returns_dead_owl_when_passed_in_with_bools(self):
+        from forest import Tokeniser
         tokeniser = Tokeniser("true^XvX^false")
         self.assertEqual(tokeniser.create_tokens(), [{"BOOLEAN" : "true"}, {"NOT_EQUAL" : "XvX"}, {"BOOLEAN" : "false"}])
 
