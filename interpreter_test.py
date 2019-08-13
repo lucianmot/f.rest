@@ -156,6 +156,11 @@ class TestTokeniser(unittest.TestCase):
         from forest import Tokeniser
         tokeniser = Tokeniser("true^XvX^false")
         self.assertEqual(tokeniser.create_tokens(), [{"BOOLEAN" : "true"}, {"NOT_EQUAL" : "XvX"}, {"BOOLEAN" : "false"}])
+
+    def test_method_returns_dead_owl_tokens_when_passed_with_strings(self):
+        from forest import Tokeniser
+        tokeniser = Tokeniser("<<Superman>>^XvX^<<Batman>>")
+        self.assertEqual(tokeniser.create_tokens(), [{"STRSTART" : "<<"}, {"STRING_CONTENT" : "Superman"}, {"STRSTOP" : ">>"}, {"NOT_EQUAL" : "XvX"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "Batman"}, {"STRSTOP" : ">>"}])
     
 
 if __name__ == '__main__':
