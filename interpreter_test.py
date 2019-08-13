@@ -146,11 +146,12 @@ class TestTokeniser(unittest.TestCase):
         from forest import Tokeniser
         tokeniser = Tokeniser("true^OvO^false")
         self.assertEqual(tokeniser.create_tokens(), [{"BOOLEAN" : "true"}, {"EQUALS" : "OvO"}, {"BOOLEAN" : "false"}])        
+
     def test_method_returns_tokens_for_String_comparison(self):
         from forest import Tokeniser
         tokeniser = Tokeniser("<<this>>^OvO^<<that>>")
         self.assertEqual(tokeniser.create_tokens(), [{"STRSTART" : "<<"}, {"STRING_CONTENT" : "this"}, {"STRSTOP" : ">>"}, {"EQUALS" : "OvO"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "that"}, {"STRSTOP" : ">>"}])
-        print(tokeniser.create_tokens())
     
+        
 if __name__ == '__main__':
     unittest.main()
