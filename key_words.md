@@ -62,6 +62,8 @@ EXPLORE FOREST_FLOWERS
 ```{WALK_IN_THE_CIRCLE_THROUGH_THE_FOREST : FOR }```
 ```{RUN_IN_THE_CIRCLE_THROUGH_THE_FOREST : WHILE }```
 
+---
+
 ### Reference
 
 | Forest | Forest explicit | Human |   
@@ -70,3 +72,11 @@ EXPLORE FOREST_FLOWERS
 | XvX | Dead owl operator | != not equal |    
 | (*)> | Crow operator | % modulo |   
 | ^._.^ | Bat operator | ??? |      
+
+---
+
+### Error message ideas
+
+`ERROR ʕノ•ᴥ•ʔノ ︵ =❱❯❭> =❱❯❭>`  
+`Looks like you got lost in the Syntax Woods, Ranger ʕ·ᴥ·ʔ`  
+`ʅʕ•ᴥ•ʔʃ Forest does not know what this means ٩ʕ•͡×•ʔ۶`  
