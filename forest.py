@@ -1,12 +1,15 @@
 import re
 
+TOKENS =    [re.compile(r'(?P<ECHO>echo)'), re.compile(r'(?P<BOOLEAN>true|false)'), re.compile(r'(?P<INTEGER>\d)'),                 re.compile(r'(?P<STRSTART><<)'), re.compile(r'(?:<<)(?P<STRING_CONTENT>.+)(?:>>)'), 
+            re.compile(r'(?P<STRSTOP>>>)')]
+
 class Interpreter(object):
     def __init__(self, text):
         self.text = text
 
     def response(self):
         tokeniser = Tokeniser(self.text)
-        token = tokeniser.create_token()
+        token = tokeniser.create_tokens()
         parser = Parser(token)
         parser.match_grammar_rule()
         ast_output = parser.create_ast_for_rule_1()
@@ -22,36 +25,34 @@ class Tokeniser(object):
     def __init__(self, text):
         self.text = text
 
-    def create_token(self):
-        if bool(re.match("echo", self.text)) == True:
-            echo = self.text[0:4]
-            restofstr = self.text[4:]
-            if bool(re.match("<<", restofstr)) == False:
-                raise Exception("Error 1")
-            elif bool(re.match("<<", restofstr)) == True:
-                if bool(re.search(">>", restofstr)) == False:
-                    raise Exception("Error 2")
-                elif bool(re.search(">>", restofstr)) == True:
-                    strstart = restofstr[0:2]
-                    middle = restofstr[2:-2]
-                    strstop = restofstr[-2:]
-                    return {"ECHO": echo, "STRSTART" : strstart, "STRING" : middle, "STRSTOP" : strstop}
+    def create_tokens(self):
+        input_array = self.split_input()
+        results = []
+        for item in input_array:
+            for token in TOKENS:
+                match_attempt = token.search(item)
+                if match_attempt == None:
+                    continue
+                results.append(match_attempt.groupdict())
 
-        else:
-            raise Exception("Error 3")
+        return results 
 
+    def split_input(self):
+        return self.text.split('^')
 
 class Parser(object):
     def __init__(self, tokens):
         self.tokens = tokens
-        self.grammar_rule_1 = GrammarRule("grammar_rule_1",["ECHO", "STRSTART", "STRING", "STRSTOP"])
+        self.grammar_rule_1 = GrammarRule("grammar_rule_1",["ECHO", "STRSTART", "STRING_CONTENT", "STRSTOP"])
         self.grammar_rule_2 = GrammarRule("grammar_rule_2",["ECHO", "INTEGER"])
         self.rules = [self.grammar_rule_1, self.grammar_rule_2]
 
     def user_input_tokens(self):
         parse_keys = []
-        for key in self.tokens:
-            parse_keys.append(key)
+        for item in self.tokens:
+            for key in item.keys():
+                parse_keys.append(key)
+        
         return parse_keys
 
     def match_grammar_rule(self):
@@ -61,8 +62,13 @@ class Parser(object):
         raise Exception("Syntax Error")
 
     def create_ast_for_rule_1(self):
-        return ASTEcho(ASTString(self.tokens["STRING"]))
+        test = self.get_token_by_key()
+        return ASTEcho(ASTString(test))
 
+    def get_token_by_key(self):
+        for item in self.tokens:
+            if "STRING_CONTENT" in item:
+                return item["STRING_CONTENT"]
 
 class GrammarRule(object):
     def __init__(self, rule_name, rule):
