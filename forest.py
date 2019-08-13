@@ -66,6 +66,9 @@ class Parser(object):
         test = self.get_token_by_key()
         return ASTEcho(ASTString(test))
 
+    def create_ast_for_rule_3(self):
+        return ASTEquals(ASTString("user's text"), ASTString("user's text"))
+
     def get_token_by_key(self):
         for item in self.tokens:
             if "STRING_CONTENT" in item:
@@ -83,3 +86,8 @@ class ASTString(object):
 class ASTEcho(object):
     def __init__(self, expr):
         self.expr = expr
+
+class ASTEquals(object):
+    def __init__(self, operand1, operand2):
+        self.operand1 = operand1
+        self.operand2 = operand2

@@ -1,5 +1,5 @@
 import unittest
-from forest import Interpreter, Tokeniser, Parser, ASTString, ASTEcho
+from forest import Interpreter, Tokeniser, Parser, ASTString, ASTEcho, ASTEquals
 
 class TestInterpreter(unittest.TestCase):
     def test_intepreter_should_be_initialized_with_text(self):
@@ -84,6 +84,12 @@ class TestParser(unittest.TestCase):
         parser = Parser(tokens)
         ast_output = parser.create_ast_for_rule_1()
         self.assertEqual(ast_output.expr.value, "anotherstring")
+
+    def test_create_ast_echo_for_grammar_rule_3(self):
+        tokens = [{"STRING_CONTENT": "Hello Forest"}, {"EQUALS": "OvO"}, {"STRING_CONTENT": "Hello Forest"}]
+        parser = Parser(tokens)
+        ast_output = parser.create_ast_for_rule_3()
+        self.assertIsInstance(ast_output, ASTEquals)
 
 class TestAST(unittest.TestCase):
     def test_AST_String_node_is_created_with_the_string_value(self):
