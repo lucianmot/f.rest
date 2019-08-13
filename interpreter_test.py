@@ -167,6 +167,11 @@ class TestTokeniser(unittest.TestCase):
         tokeniser = Tokeniser("<<Superman>>^XvX^<<Batman>>")
         self.assertEqual(tokeniser.create_tokens(), [{"STRSTART" : "<<"}, {"STRING_CONTENT" : "Superman"}, {"STRSTOP" : ">>"}, {"NOT_EQUAL" : "XvX"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "Batman"}, {"STRSTOP" : ">>"}])
     
+    def test_method_returns_crow_operator_when_passed_in(self):
+        from forest import Tokeniser
+        tokeniser = Tokeniser("(*)>")
+        self.assertEqual(tokeniser.create_tokens(), [{"MODULUS" : "(*)>"}])
+
 
 if __name__ == '__main__':
     unittest.main()
