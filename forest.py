@@ -21,6 +21,29 @@ class Interpreter(object):
 class Tokeniser(object):
     def __init__(self, text):
         self.text = text
+        self.tokenoutput = []
+
+    
+    # our input will be echo << Hello World! >>
+    # split everything by space in an array
+     # have individual element as a string in an array
+    # iterate over each element
+    def tokeniser2(self):
+        TOKEN_TYPES = [ {"ECHO" : "echo"}, {"STRSTART" : "<<"}, {"STRING" : "string"} , { "STREND" : ">>"} ]
+        tech = "echo << Hello World! >>"
+        split_text = tech.split()
+        for element in split_text:
+            for token_type in TOKEN_TYPES:
+                if element == token_type["ECHO"]:
+                    self.tokenoutput.append(token_type)
+        
+    # match each element to a token type from a token array/dict
+    # once it detects << it would save the index on var str start
+    # the attempt to search for >> save its index on var str end
+    # loop taking in str start index and str end index
+    # everything that is between those 2 index would become a joined string
+    # expect to see an array called tokenized_output = [{"ECHO" : "echo", "STRSTART" : "<<", "STRING" : "Hello World", "STRSTOP" : ">>"]
+    
 
     def create_token(self):
         if bool(re.match("echo", self.text)) == True:
