@@ -85,11 +85,23 @@ class TestParser(unittest.TestCase):
         ast_output = parser.create_ast_for_rule_1()
         self.assertEqual(ast_output.expr.value, "anotherstring")
 
-    def test_create_ast_echo_for_grammar_rule_3(self):
+    def test_create_ast_equals_for_grammar_rule_3(self):
         tokens = [{"STRING_CONTENT": "Hello Forest"}, {"EQUALS": "OvO"}, {"STRING_CONTENT": "Hello Forest"}]
         parser = Parser(tokens)
         ast_output = parser.create_ast_for_rule_3()
         self.assertIsInstance(ast_output, ASTEquals)
+
+    def test_create_ast_equals_for_grammar_rule_3_string_value_operand_1(self):
+        tokens = [{"STRING_CONTENT": "Hello Forest"}, {"EQUALS": "OvO"}, {"STRING_CONTENT": "Hello Forest again"}]
+        parser = Parser(tokens)
+        ast_output = parser.create_ast_for_rule_3()
+        self.assertEqual(ast_output.operand1.value, "Hello Forest")
+
+    def test_create_ast_equals_for_grammar_rule_3_string_value_operand_3(self):
+        tokens = [{"STRING_CONTENT": "Hello Forest"}, {"EQUALS": "OvO"}, {"STRING_CONTENT": "Hello Forest again"}]
+        parser = Parser(tokens)
+        ast_output = parser.create_ast_for_rule_3()
+        self.assertEqual(ast_output.operand2.value, "Hello Forest again")
 
 class TestAST(unittest.TestCase):
     def test_AST_String_node_is_created_with_the_string_value(self):
