@@ -2,20 +2,17 @@ import unittest
 from forest import Interpreter, Tokeniser, Parser, ASTString, ASTEcho, ASTEquals, ASTConditional, ASTModulus, ASTInteger
 
 class TestFizzBuzzFeature(unittest.TestCase):
-    @unittest.skip("reason not implemented")
     def test_simple_fizzbuzz_feature(self):
        interpreter = Interpreter("WALK_PATH_IF_SEE^30^(*)>^15^OvO^0^echo^<<fizzbuzz>>")
-       self.assertEqual(interpreter.text, "Forest says: fizzbuzz")
+       self.assertEqual(interpreter.response(), "Forest says: fizzbuzz")
 
-    @unittest.skip("reason not implemented")
     def test_simple_fizz_feature(self):
        interpreter = Interpreter("WALK_PATH_IF_SEE^6^(*)>^3^OvO^0^echo^<<fizz>>")
-       self.assertEqual(interpreter.text, "Forest says: fizz")
+       self.assertEqual(interpreter.response(), "Forest says: fizz")
 
-    @unittest.skip("reason not implemented")
     def test_simple_buzz_feature(self):
        interpreter = Interpreter("WALK_PATH_IF_SEE^10^(*)>^5^OvO^0^echo^<<buzz>>")
-       self.assertEqual(interpreter.text, "Forest says: buzz")
+       self.assertEqual(interpreter.response(), "Forest says: buzz")
 
 class TestInterpreter(unittest.TestCase):
     def test_intepreter_should_be_initialized_with_text(self):
@@ -30,7 +27,7 @@ class TestInterpreter(unittest.TestCase):
         interpreter = Interpreter("echo^<<A>>")
         self.assertEqual(interpreter.response(), "Forest says: A")
 
-    @unittest.skip("reason")
+    @unittest.skip("reason bug")
     def test_interpreter_should_return_integer_when_user_enters_4(self):
         interpreter = Interpreter("echo^<<4>>")
         self.assertEqual(interpreter.response(), "Forest says: 4")
@@ -120,14 +117,14 @@ class TestParser(unittest.TestCase):
         self.assertEqual(ast_output.operand2.value, "Hello Forest again")
 
     def test_valid_sequence_for_fizzbuzz_returns_grammar_rule4(self):
-        tokens = [{"IF_START" : "WALK_PATH_IF_SEE"}, {"INTEGER" : "30"}, {"MODULUS" : "(*)>"}, {"INTEGER" : "15"}, {"EQUALS" : "OvO"}, {"INTEGER" : "0"}, {"ECHO" : "echo"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "fizzbuzz"}, {"STRSTOP" : ">>"}, {"END" : "CAMP"}]
+        tokens = [{"IF_START" : "WALK_PATH_IF_SEE"}, {"INTEGER" : "30"}, {"MODULUS" : "(*)>"}, {"INTEGER" : "15"}, {"EQUALS" : "OvO"}, {"INTEGER" : "0"}, {"ECHO" : "echo"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "fizzbuzz"}, {"STRSTOP" : ">>"}]
         parser = Parser(tokens)
         self.assertEqual(parser.match_grammar_rule(), "rule_4")
 
 class TestParserASTForGrammarRule4(unittest.TestCase):
 
     def setUp(self):
-        tokens = [{"IF_START" : "WALK_PATH_IF_SEE"}, {"INTEGER" : 30}, {"MODULUS" : "(*)>"}, {"INTEGER" : 15}, {"EQUALS" : "OvO"}, {"INTEGER" : 0}, {"ECHO" : "echo"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "fizzbuzz"}, {"STRSTOP" : ">>"}, {"END" : "CAMP"}]
+        tokens = [{"IF_START" : "WALK_PATH_IF_SEE"}, {"INTEGER" : 30}, {"MODULUS" : "(*)>"}, {"INTEGER" : 15}, {"EQUALS" : "OvO"}, {"INTEGER" : 0}, {"ECHO" : "echo"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "fizzbuzz"}, {"STRSTOP" : ">>"}]
         parser = Parser(tokens)
         self.ast_output = parser.create_ast_for_rule_4()
 
@@ -178,6 +175,26 @@ class TestInterpreterForGrammarRule4(unittest.TestCase):
         interpreter = Interpreter("")
         ast_mod = ASTModulus(ASTInteger(16), ASTInteger(5))
         self.assertEqual(interpreter.visit_ast_modulus(ast_mod), 1)
+
+    def test_visit_equal_returns_true(self):
+        interpreter = Interpreter("")
+        ast_mod = ASTModulus(ASTInteger(16), ASTInteger(5))
+        ast_equal = ASTEquals(ast_mod, ASTInteger(1))
+        self.assertEqual(interpreter.visit_ast_equals(ast_equal), True)
+
+    def test_visit_equal_returns_false(self):
+        interpreter = Interpreter("")
+        ast_mod = ASTModulus(ASTInteger(16), ASTInteger(5))
+        ast_equal = ASTEquals(ast_mod, ASTInteger(2))
+        self.assertEqual(interpreter.visit_ast_equals(ast_equal), False)
+
+    def test_visit_conditional_returns_FizzBuzz(self):
+        interpreter = Interpreter("")
+        ast_mod = ASTModulus(ASTInteger(30), ASTInteger(15))
+        ast_equal = ASTEquals(ast_mod, ASTInteger(0))
+        ast_echo = ASTEcho(ASTString("FizzBuzz"))
+        ast_conditional = ASTConditional(ast_equal, ast_echo, "else...")
+        self.assertEqual(interpreter.visit_ast_conditional(ast_conditional), "Forest says: FizzBuzz")
 
 class TestAST(unittest.TestCase):
     def test_AST_String_node_is_created_with_the_string_value(self):
