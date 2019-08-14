@@ -46,6 +46,8 @@ class Tokeniser(object):
         return self.text.split('^')
 
 class Parser(object):
+    ERROR_MESSAGES = ["ERROR ʕノ•ᴥ•ʔノ ︵ =❱❯❭> =❱❯❭>", "Looks like you got lost in the Syntax Woods, Ranger ʕ·ᴥ·ʔ", "Forest does not know what this means ʅʕ•ᴥ•ʔʃ", "ERROR 🌲🌲🌲 ʕ·ᴥ·ʔ 🌲🌲🌲 YIKES", "٩ʕ•͡×•ʔ۶ This operation cant be completed", "Looks like you dont know Forest... but we dont know it either ⊂（´㉨｀*）⊃"]
+    
     def __init__(self, tokens):
         self.tokens = tokens
         self.grammar_rule_1 = GrammarRule("grammar_rule_1",["ECHO", "STRSTART", "STRING_CONTENT", "STRSTOP"])
@@ -82,7 +84,6 @@ class Parser(object):
                 return item["STRING_CONTENT"]
 
     def return_error_message(self):
-        ERROR_MESSAGES = ["ERROR ʕノ•ᴥ•ʔノ ︵ =❱❯❭> =❱❯❭>", "Looks like you got lost in the Syntax Woods, Ranger ʕ·ᴥ·ʔ", "Forest does not know what this means ʅʕ•ᴥ•ʔʃ", "ERROR 🌲🌲🌲 ʕ·ᴥ·ʔ 🌲🌲🌲 YIKES", "٩ʕ•͡×•ʔ۶ This operation cant be completed", "Looks like you dont know Forest... but we dont know it either ⊂（´㉨｀*）⊃"]
         return random.choice(ERROR_MESSAGES)
 
 class GrammarRule(object):
