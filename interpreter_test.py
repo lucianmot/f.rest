@@ -191,7 +191,7 @@ class TestTokeniser(unittest.TestCase):
         tokeniser = Tokeniser("<<this>>^OvO^<<that>>")
         self.assertEqual(tokeniser.create_tokens(), [{"STRSTART" : "<<"}, {"STRING_CONTENT" : "this"}, {"STRSTOP" : ">>"}, {"EQUALS" : "OvO"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "that"}, {"STRSTOP" : ">>"}])
 
-    def test_method_returns_dead_owl_when_passed_in_with_bools(self):
+    def test_method_returns_dead_owl_when_passed_in_with_integers(self):
         from forest import Tokeniser
         tokeniser = Tokeniser("7^XvX^8")
         self.assertEqual(tokeniser.create_tokens(), [{"INTEGER" : "7"}, {"NOT_EQUAL" : "XvX"}, {"INTEGER" : "8"}])
@@ -216,6 +216,41 @@ class TestTokeniser(unittest.TestCase):
         tokeniser = Tokeniser("5^(*)>^2")
         self.assertEqual(tokeniser.create_tokens(), [{"INTEGER" : "5"}, {"MODULUS" : "(*)>"}, {"INTEGER" : "2"}])
 
+    def test_tokeniser_recognises_beginning_of_if_statement(self):
+        from forest import Tokeniser
+        tokeniser = Tokeniser("WALK_PATH_IF_SEE")
+        self.assertEqual(tokeniser.create_tokens(), [{"IF_START" : "WALK_PATH_IF_SEE"}])
+
+    def test_tokeniser_recognises_beginning_of_if_statement_with_argument(self):
+        from forest import Tokeniser
+        tokeniser = Tokeniser("WALK_PATH_IF_SEE^6")
+        self.assertEqual(tokeniser.create_tokens(), [{"IF_START" : "WALK_PATH_IF_SEE"}, {"INTEGER" : "6"}])
+
+    def test_tokeniser_recognises_beginning_of_if_statement_with_boolean(self):
+        from forest import Tokeniser
+        tokeniser = Tokeniser("WALK_PATH_IF_SEE^true")
+        self.assertEqual(tokeniser.create_tokens(), [{"IF_START" : "WALK_PATH_IF_SEE"}, {"BOOLEAN" : "true"}])
+
+    def test_tokeniser_recognises_end_of_expression(self):
+        from forest import Tokeniser
+        tokeniser = Tokeniser("CAMP")
+        self.assertEqual(tokeniser.create_tokens(), [{"END" : "CAMP"}]) 
+
+    def test_tokeniser_tokenises_if_end_statement(self):
+        from forest import Tokeniser
+        tokeniser = Tokeniser("WALK_PATH_IF_SEE^CAMP")
+        self.assertEqual(tokeniser.create_tokens(), [{"IF_START" : "WALK_PATH_IF_SEE"}, {"END" : "CAMP"}])
+
+    def test_tokeniser_tokenises_fizzbuzz_statement(self):
+        from forest import Tokeniser
+        tokeniser = Tokeniser("WALK_PATH_IF_SEE^30^(*)>^15^OvO^0^echo^<<fizzbuzz>>")
+        self.assertEqual(tokeniser.create_tokens(), [{"IF_START" : "WALK_PATH_IF_SEE"}, {"INTEGER" : "30"}, {"MODULUS" : "(*)>"}, {"INTEGER" : "15"}, {"EQUALS" : "OvO"}, {"INTEGER" : "0"}, {"ECHO" : "echo"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "fizzbuzz"}, {"STRSTOP" : ">>"}])
+    
+    def test_tokeniser_tokenises_fizzbuzz_statement_with_end(self):
+        from forest import Tokeniser
+        tokeniser = Tokeniser("WALK_PATH_IF_SEE^30^(*)>^15^OvO^0^echo^<<fizzbuzz>>^CAMP")
+        self.assertEqual(tokeniser.create_tokens(), [{"IF_START" : "WALK_PATH_IF_SEE"}, {"INTEGER" : "30"}, {"MODULUS" : "(*)>"}, {"INTEGER" : "15"}, {"EQUALS" : "OvO"}, {"INTEGER" : "0"}, {"ECHO" : "echo"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "fizzbuzz"}, {"STRSTOP" : ">>"}, {"END" : "CAMP"}])
+        
 
 if __name__ == '__main__':
     unittest.main()
