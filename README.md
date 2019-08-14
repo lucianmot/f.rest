@@ -56,7 +56,15 @@ $ python3
 >>> 'Forest says: Hello World!'
 ```
 
-Try putting your own message between the `<<tree tops>>`!  
+Try putting your own message between the `<<tree tops>>`!   
+
+**Variable assignment**  
+
+```
+BACKPACK:myvar^PACK_WITH^<<bears 🐻🐻🐻>> 
+
+// echo^myvar should print 'bears 🐻🐻🐻'
+```
 
 Take care, don't start the fire.
 

@@ -78,16 +78,3 @@ EXPLORE FOREST_FLOWERS
 
 ### Usage
 
-**Variable assignment**  
-
-```
-BACKPACK:myvar^PACK_WITH^<<poop>> 
-
-// echo^myvar should print poop
-```
-
----
-
-### Error message ideas
-
-
