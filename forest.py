@@ -81,8 +81,11 @@ class Parser(object):
 
     def create_ast_for_rule_4(self):
         int_token1 = self.tokens[1]
+        int_token2 = self.tokens[3]
+
         integer_operand1 = ASTInteger(int_token1["INTEGER"])
-        modulus_operator = ASTModulus(integer_operand1, "Academy")
+        integer_operand2 = ASTInteger(int_token2["INTEGER"])
+        modulus_operator = ASTModulus(integer_operand1, integer_operand2)
         expr_branch = ASTEquals(modulus_operator, "world")
         return ASTConditional(expr_branch, "Jo", "Aleks")
 
