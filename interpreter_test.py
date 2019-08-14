@@ -167,6 +167,18 @@ class TestParserASTForGrammarRule4(unittest.TestCase):
     def test_create_ast_euals_for_grammar_rule_4_equal_right_branch_value_0(self):
         self.assertEqual(self.ast_output.expr_branch.operand2.value, 0)
 
+class TestInterpreterForGrammarRule4(unittest.TestCase):
+
+    def test_visit_modulus_returns_0(self):
+        interpreter = Interpreter("")
+        ast_mod = ASTModulus(ASTInteger(15), ASTInteger(5))
+        self.assertEqual(interpreter.visit_ast_modulus(ast_mod), 0)
+
+    def test_visit_modulus_returns_1(self):
+        interpreter = Interpreter("")
+        ast_mod = ASTModulus(ASTInteger(16), ASTInteger(5))
+        self.assertEqual(interpreter.visit_ast_modulus(ast_mod), 1)
+
 class TestAST(unittest.TestCase):
     def test_AST_String_node_is_created_with_the_string_value(self):
         string_ast_node = ASTString("Hello World")

@@ -24,6 +24,12 @@ class Interpreter(object):
     def visit_ast_echo(self, ast_echo_node):
         return "Forest says: " + ast_echo_node.expr.value
 
+    def visit_ast_modulus(self, ast_modulus_node):
+        result1 = ast_modulus_node.operand1.value
+        result2 = ast_modulus_node.operand2.value
+        result3 = result1%result2
+        return result3
+
     def _get_ast_method(self, parser):
         method_name = 'create_ast_for_' + parser.match_grammar_rule()
         ast_method = getattr(parser, method_name)
