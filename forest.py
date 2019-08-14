@@ -1,7 +1,8 @@
 import re
 
-TOKENS =   [re.compile(r'(?P<VARIABLE>BACKPACK)'), re.compile(r'(?P<IF_START>WALK_PATH_IF_SEE)'),
-            re.compile(r'(?P<ECHO>echo)'), re.compile(r'(?P<BOOLEAN>true|false)'), re.compile(r'(?P<MODULUS>\(\*\)\>)'), 
+TOKENS =   [re.compile(r'(?P<VARIABLE>BACKPACK)'), re.compile(r'(?P<ASSIGNMENT>PACK_WITH)'),
+            re.compile(r'(?P<IF_START>WALK_PATH_IF_SEE)'),  re.compile(r'(?P<ECHO>echo)'),
+            re.compile(r'(?P<BOOLEAN>true|false)'), re.compile(r'(?P<MODULUS>\(\*\)\>)'), 
             re.compile(r'(?P<EQUALS>OvO)'), re.compile(r'(?P<NOT_EQUAL>XvX)'), 
             re.compile(r'(?P<INTEGER>[\d]+)'), re.compile(r'(?P<STRSTART><<)'), 
             re.compile(r'(?:<<)(?P<STRING_CONTENT>.+)(?:>>)'), re.compile(r'(?P<STRSTOP>>>)'), 
