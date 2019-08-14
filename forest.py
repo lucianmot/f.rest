@@ -12,8 +12,13 @@ class Interpreter(object):
         tokeniser = Tokeniser(self.text)
         token = tokeniser.create_tokens()
         parser = Parser(token)
-        parser.match_grammar_rule()
-        ast_output = parser.create_ast_for_rule_1()
+        matched_grammar_rule = parser.match_grammar_rule()
+        if matched_grammar_rule == "grammar_rule_1":
+            ast_output = parser.create_ast_for_rule_1()
+        elif matched_grammar_rule == "grammar_rule_2":
+            ast_output = parser.create_ast_for_rule_2()
+        else:
+            ast_output = parser.create_ast_for_rule_3()
         return self.visit_tree(ast_output)
 
     def visit_tree(self, ast_output):
@@ -64,8 +69,8 @@ class Parser(object):
         raise Exception("Syntax Error")
 
     def create_ast_for_rule_1(self):
-        test = self.get_token_by_key()
-        return ASTEcho(ASTString(test))
+        user_input_string = self.get_token_by_key()
+        return ASTEcho(ASTString(user_input_string))
 
     def create_ast_for_rule_3(self):
         str_token1 = self.tokens[0]
