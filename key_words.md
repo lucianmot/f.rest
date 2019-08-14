@@ -90,8 +90,4 @@ BACKPACK:myvar^PACK_WITH^<<poop>>
 
 ### Error message ideas
 
-`ERROR ʕノ•ᴥ•ʔノ ︵ =❱❯❭> =❱❯❭>`  
-`Looks like you got lost in the Syntax Woods, Ranger ʕ·ᴥ·ʔ`  
-`Forest does not know what this means ʅʕ•ᴥ•ʔʃ `  
-`ERROR 🌲🌲🌲ʕ·ᴥ·ʔ🌲🌲🌲 YIKES`  
-`٩ʕ•͡×•ʔ۶ This operation cant be completed`
+
