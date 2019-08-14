@@ -80,7 +80,8 @@ class Parser(object):
         return ASTEquals(ASTString(str_token1["STRING_CONTENT"]), ASTString(str_token3["STRING_CONTENT"]))
 
     def create_ast_for_rule_4(self):
-        return ASTConditional("James", "Jo", "Aleks")
+        expr_branch = ASTEquals("hello", "world")
+        return ASTConditional(expr_branch, "Jo", "Aleks")
 
     def get_token_by_key(self):
         for item in self.tokens:
@@ -106,7 +107,7 @@ class ASTEquals(object):
         self.operand2 = operand2
 
 class ASTConditional(object):
-    def __init__(self, expr, then_branch, else_branch):
-        self.expr = expr
+    def __init__(self, expr_branch, then_branch, else_branch):
+        self.expr_branch = expr_branch
         self.then_branch = then_branch
         self.else_branch = else_branch
