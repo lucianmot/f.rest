@@ -119,6 +119,7 @@ class TestParser(unittest.TestCase):
         ast_output = parser.create_ast_for_rule_3()
         self.assertEqual(ast_output.operand2.value, "Hello Forest again")
 
+
 class TestAST(unittest.TestCase):
     def test_AST_String_node_is_created_with_the_string_value(self):
         string_ast_node = ASTString("Hello World")
@@ -250,7 +251,13 @@ class TestTokeniser(unittest.TestCase):
         from forest import Tokeniser
         tokeniser = Tokeniser("WALK_PATH_IF_SEE^30^(*)>^15^OvO^0^echo^<<fizzbuzz>>^CAMP")
         self.assertEqual(tokeniser.create_tokens(), [{"IF_START" : "WALK_PATH_IF_SEE"}, {"INTEGER" : "30"}, {"MODULUS" : "(*)>"}, {"INTEGER" : "15"}, {"EQUALS" : "OvO"}, {"INTEGER" : "0"}, {"ECHO" : "echo"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "fizzbuzz"}, {"STRSTOP" : ">>"}, {"END" : "CAMP"}])
-        
+
+    def test_tokenise_variable_assigment(self):
+        from forest import Tokeniser
+        tokeniser = Tokeniser("BACKPACK")
+        self.assertEqual(tokeniser.create_tokens(), [{"VARIABLE" : "BACKPACK"}])
+
+    
 
 if __name__ == '__main__':
     unittest.main()
