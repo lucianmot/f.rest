@@ -1,5 +1,5 @@
 import unittest
-from forest import Interpreter, Tokeniser, Parser, ASTString, ASTEcho, ASTEquals
+from forest import Interpreter, Tokeniser, Parser, ASTString, ASTEcho, ASTEquals, ASTConditional, ASTModulus, ASTInteger
 
 class TestFizzBuzzFeature(unittest.TestCase):
     @unittest.skip("reason not implemented")
@@ -61,7 +61,7 @@ class TestParser(unittest.TestCase):
     def test_valid_sequence_of_string_tokens_returns_true(self):
         tokens = [{"ECHO": "echo"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "string"}, {"STRSTOP" : ">>"}]
         parser = Parser(tokens)
-        self.assertEqual(parser.match_grammar_rule(), "grammar_rule_1")
+        self.assertEqual(parser.match_grammar_rule(), "rule_1")
 
     def test_invalid_sequence_of_string_tokens_returns_false(self):
         tokens = [{"ECHO": "echo"}, {"STRING_CONTENT" : "string"}, {"STRSTOP" : ">>"}]
@@ -71,12 +71,12 @@ class TestParser(unittest.TestCase):
     def test_valid_sequence_of_integer_tokens_returns_true(self):
         tokens = [{"ECHO": "echo"}, {"INTEGER": 8}]
         parser = Parser(tokens)
-        self.assertEqual(parser.match_grammar_rule(), "grammar_rule_2")
+        self.assertEqual(parser.match_grammar_rule(), "rule_2")
 
     def test_valid_sequence_of_stings_and_equal_comparator_tokens_returns_grammar_rule3(self):
         tokens = [{"STRING_CONTENT": "Hello Forest"}, {"EQUALS": "OvO"}, {"STRING_CONTENT": "Hello Forest"}]
         parser = Parser(tokens)
-        self.assertEqual(parser.match_grammar_rule(), "grammar_rule_3")
+        self.assertEqual(parser.match_grammar_rule(), "rule_3")
 
     def test_invalid_sequence_of_integer_tokens_returns_false(self):
         tokens = [{"INTEGER": 8}, {"ECHO": "echo"}]
@@ -119,6 +119,53 @@ class TestParser(unittest.TestCase):
         ast_output = parser.create_ast_for_rule_3()
         self.assertEqual(ast_output.operand2.value, "Hello Forest again")
 
+    def test_valid_sequence_for_fizzbuzz_returns_grammar_rule4(self):
+        tokens = [{"IF_START" : "WALK_PATH_IF_SEE"}, {"INTEGER" : "30"}, {"MODULUS" : "(*)>"}, {"INTEGER" : "15"}, {"EQUALS" : "OvO"}, {"INTEGER" : "0"}, {"ECHO" : "echo"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "fizzbuzz"}, {"STRSTOP" : ">>"}, {"END" : "CAMP"}]
+        parser = Parser(tokens)
+        self.assertEqual(parser.match_grammar_rule(), "rule_4")
+
+class TestParserASTForGrammarRule4(unittest.TestCase):
+
+    def setUp(self):
+        tokens = [{"IF_START" : "WALK_PATH_IF_SEE"}, {"INTEGER" : 30}, {"MODULUS" : "(*)>"}, {"INTEGER" : 15}, {"EQUALS" : "OvO"}, {"INTEGER" : 0}, {"ECHO" : "echo"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "fizzbuzz"}, {"STRSTOP" : ">>"}, {"END" : "CAMP"}]
+        parser = Parser(tokens)
+        self.ast_output = parser.create_ast_for_rule_4()
+
+    def test_create_ast_equals_for_grammar_rule_4(self):
+        self.assertIsInstance(self.ast_output, ASTConditional)
+
+    def test_create_ast_equals_for_grammar_rule_4_then_branch(self):
+        self.assertIsInstance(self.ast_output.then_branch, ASTEcho)
+
+    def test_create_ast_equals_for_grammar_rule_4_then_branch_echos_is_a_string(self):
+        self.assertIsInstance(self.ast_output.then_branch.expr, ASTString)
+
+    def test_create_ast_equals_for_grammar_rule_4_then_branch_echos_is_a_string_with_value_fizzbuzz(self):
+        self.assertEqual(self.ast_output.then_branch.expr.value, "fizzbuzz")
+
+    def test_create_ast_equals_for_grammar_rule_4_ast_equal_on_expression_branch(self):
+        self.assertIsInstance(self.ast_output.expr_branch, ASTEquals)
+
+    def test_create_ast_equals_for_grammar_rule_4_ASTEqual_left_branch_has_modulus(self):
+        self.assertIsInstance(self.ast_output.expr_branch.operand1, ASTModulus)
+
+    def test_create_ast_equals_for_grammar_rule_4_Modulus_int_left_branch(self):
+        self.assertIsInstance(self.ast_output.expr_branch.operand1.operand1, ASTInteger)
+
+    def test_create_ast_euals_for_grammar_rule_4_Modulus_int_left_branch_value_30(self):
+        self.assertEqual(self.ast_output.expr_branch.operand1.operand1.value, 30)
+
+    def test_create_ast_equals_for_grammar_rule_4_Modulus_int_right_branch(self):
+        self.assertIsInstance(self.ast_output.expr_branch.operand1.operand2, ASTInteger)
+
+    def test_create_ast_euals_for_grammar_rule_4_Modulus_int_right_branch_value_15(self):
+        self.assertEqual(self.ast_output.expr_branch.operand1.operand2.value, 15)
+
+    def test_create_ast_equals_for_grammar_rule_4_equal_right_branch(self):
+        self.assertIsInstance(self.ast_output.expr_branch.operand2, ASTInteger)
+
+    def test_create_ast_euals_for_grammar_rule_4_equal_right_branch_value_0(self):
+        self.assertEqual(self.ast_output.expr_branch.operand2.value, 0)
 
 class TestAST(unittest.TestCase):
     def test_AST_String_node_is_created_with_the_string_value(self):
@@ -176,16 +223,16 @@ class TestTokeniser(unittest.TestCase):
         from forest import Tokeniser
         tokeniser = Tokeniser("<<a lot of text>>")
         self.assertEqual(tokeniser.create_tokens(), [{"STRSTART" : "<<"}, {"STRING_CONTENT" : "a lot of text"}, {"STRSTOP" : ">>"}])
-        
+
     def test_method_returns_comparison_token_for_owl_operator(self):
         from forest import Tokeniser
         tokeniser = Tokeniser("OvO")
-        self.assertEqual(tokeniser.create_tokens(), [{"EQUALS" : "OvO"}])        
+        self.assertEqual(tokeniser.create_tokens(), [{"EQUALS" : "OvO"}])
 
     def test_method_returns_comparison_token_and_bool_for_owl_operator_with_bools(self):
         from forest import Tokeniser
         tokeniser = Tokeniser("true^OvO^false")
-        self.assertEqual(tokeniser.create_tokens(), [{"BOOLEAN" : "true"}, {"EQUALS" : "OvO"}, {"BOOLEAN" : "false"}])        
+        self.assertEqual(tokeniser.create_tokens(), [{"BOOLEAN" : "true"}, {"EQUALS" : "OvO"}, {"BOOLEAN" : "false"}])
 
     def test_method_returns_tokens_for_String_comparison(self):
         from forest import Tokeniser
@@ -206,7 +253,7 @@ class TestTokeniser(unittest.TestCase):
         from forest import Tokeniser
         tokeniser = Tokeniser("<<Superman>>^XvX^<<Batman>>")
         self.assertEqual(tokeniser.create_tokens(), [{"STRSTART" : "<<"}, {"STRING_CONTENT" : "Superman"}, {"STRSTOP" : ">>"}, {"NOT_EQUAL" : "XvX"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "Batman"}, {"STRSTOP" : ">>"}])
-    
+
     def test_method_returns_crow_operator_when_passed_in(self):
         from forest import Tokeniser
         tokeniser = Tokeniser("(*)>")
@@ -235,7 +282,7 @@ class TestTokeniser(unittest.TestCase):
     def test_tokeniser_recognises_end_of_expression(self):
         from forest import Tokeniser
         tokeniser = Tokeniser("CAMP")
-        self.assertEqual(tokeniser.create_tokens(), [{"END" : "CAMP"}]) 
+        self.assertEqual(tokeniser.create_tokens(), [{"END" : "CAMP"}])
 
     def test_tokeniser_tokenises_if_end_statement(self):
         from forest import Tokeniser
@@ -246,7 +293,7 @@ class TestTokeniser(unittest.TestCase):
         from forest import Tokeniser
         tokeniser = Tokeniser("WALK_PATH_IF_SEE^30^(*)>^15^OvO^0^echo^<<fizzbuzz>>")
         self.assertEqual(tokeniser.create_tokens(), [{"IF_START" : "WALK_PATH_IF_SEE"}, {"INTEGER" : "30"}, {"MODULUS" : "(*)>"}, {"INTEGER" : "15"}, {"EQUALS" : "OvO"}, {"INTEGER" : "0"}, {"ECHO" : "echo"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "fizzbuzz"}, {"STRSTOP" : ">>"}])
-    
+
     def test_tokeniser_tokenises_fizzbuzz_statement_with_end(self):
         from forest import Tokeniser
         tokeniser = Tokeniser("WALK_PATH_IF_SEE^30^(*)>^15^OvO^0^echo^<<fizzbuzz>>^CAMP")
