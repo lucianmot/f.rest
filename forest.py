@@ -6,7 +6,7 @@ TOKENS =   [re.compile(r'(?P<VARIABLE>BACKPACK)'), re.compile(r'(?P<ASSIGNMENT>P
             re.compile(r'(?P<EQUALS>OvO)'), re.compile(r'(?P<NOT_EQUAL>XvX)'), 
             re.compile(r'(?P<INTEGER>[\d]+)'), re.compile(r'(?P<STRSTART><<)'), 
             re.compile(r'(?:<<)(?P<STRING_CONTENT>.+)(?:>>)'), re.compile(r'(?P<STRSTOP>>>)'), 
-            re.compile(r'(?P<END>CAMP)')]
+            re.compile(r'(?P<END>CAMP)'), re.compile(r'(?:BACKPACK:)(?P<VARIABLE_NAME>.+)')]
 
 class Interpreter(object):
     def __init__(self, text):

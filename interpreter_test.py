@@ -261,6 +261,12 @@ class TestTokeniser(unittest.TestCase):
         from forest import Tokeniser
         tokeniser = Tokeniser("PACK_WITH")
         self.assertEqual(tokeniser.create_tokens(), [{"ASSIGNMENT" : "PACK_WITH"}])
+
+    def test_tokenise_variable_assignment_with_a_string(self):
+        from forest import Tokeniser
+        tokeniser = Tokeniser("BACKPACK:arnold^PACK_WITH^<<pikachu>>")
+        self.assertEqual(tokeniser.create_tokens(), [{"VARIABLE" : "BACKPACK"}, {"VARIABLE_NAME" : "arnold"}, {"ASSIGNMENT" : "PACK_WITH"},
+        {"STRSTART" : "<<"}, {"STRING_CONTENT" : "pikachu"}, {"STRSTOP" : ">>"}])
     
 
 if __name__ == '__main__':
