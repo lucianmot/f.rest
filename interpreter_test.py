@@ -1,5 +1,5 @@
 import unittest
-from forest import Interpreter, Tokeniser, Parser, ASTString, ASTEcho, ASTEquals, ASTConditional, ASTModulus
+from forest import Interpreter, Tokeniser, Parser, ASTString, ASTEcho, ASTEquals, ASTConditional, ASTModulus, ASTInteger
 
 class TestFizzBuzzFeature(unittest.TestCase):
     @unittest.skip("reason not implemented")
@@ -141,6 +141,12 @@ class TestParser(unittest.TestCase):
         parser = Parser(tokens)
         ast_output = parser.create_ast_for_rule_4()
         self.assertIsInstance(ast_output.expr_branch.operand1, ASTModulus)
+
+    def test_create_ast_euqlas_for_grammar_rule_4_Modulus_int_left_branch(self):
+        tokens = [{"IF_START" : "WALK_PATH_IF_SEE"}, {"INTEGER" : "30"}, {"MODULUS" : "(*)>"}, {"INTEGER" : "15"}, {"EQUALS" : "OvO"}, {"INTEGER" : "0"}, {"ECHO" : "echo"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "fizzbuzz"}, {"STRSTOP" : ">>"}, {"END" : "CAMP"}]
+        parser = Parser(tokens)
+        ast_output = parser.create_ast_for_rule_4()
+        self.assertIsInstance(ast_output.expr_branch.operand1.operand1, ASTInteger)
 
 class TestAST(unittest.TestCase):
     def test_AST_String_node_is_created_with_the_string_value(self):
