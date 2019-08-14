@@ -257,6 +257,10 @@ class TestTokeniser(unittest.TestCase):
         tokeniser = Tokeniser("BACKPACK")
         self.assertEqual(tokeniser.create_tokens(), [{"VARIABLE" : "BACKPACK"}])
 
+    def test_tokenise_variable_assigment_assigner(self):
+        from forest import Tokeniser
+        tokeniser = Tokeniser("PACK_WITH")
+        self.assertEqual(tokeniser.create_tokens(), [{"ASSIGNMENT" : "PACK_WITH"}])
     
 
 if __name__ == '__main__':
