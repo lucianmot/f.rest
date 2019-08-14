@@ -124,6 +124,13 @@ class TestParser(unittest.TestCase):
         parser = Parser(tokens)
         self.assertEqual(parser.match_grammar_rule(), "rule_4")
 
+    def test_create_ast_equals_for_grammar_rule_4(self):
+        tokens = [{"IF_START" : "WALK_PATH_IF_SEE"}, {"INTEGER" : "30"}, {"MODULUS" : "(*)>"}, {"INTEGER" : "15"}, {"EQUALS" : "OvO"}, {"INTEGER" : "0"}, {"ECHO" : "echo"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "fizzbuzz"}, {"STRSTOP" : ">>"}, {"END" : "CAMP"}]
+        parser = Parser(tokens)
+        ast_output = parser.create_ast_for_rule_4()
+        self.assertIsInstance(ast_output, ASTEquals)
+
+
 class TestAST(unittest.TestCase):
     def test_AST_String_node_is_created_with_the_string_value(self):
         string_ast_node = ASTString("Hello World")
