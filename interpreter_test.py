@@ -1,6 +1,22 @@
 import unittest
 from forest import Interpreter, Tokeniser, Parser, ASTString, ASTEcho, ASTEquals
 
+class TestFizzBuzzFeature(unittest.TestCase):
+    @unittest.skip("reason not implemented")
+    def test_simple_fizzbuzz_feature(self):
+       interpreter = Interpreter("WALK_PATH_IF_SEE^30^(*)>^15^OvO^0^echo^<<fizzbuzz>>")
+       self.assertEqual(interpreter.text, "Forest says: fizzbuzz")
+
+    @unittest.skip("reason not implemented")
+    def test_simple_fizz_feature(self):
+       interpreter = Interpreter("WALK_PATH_IF_SEE^6^(*)>^3^OvO^0^echo^<<fizz>>")
+       self.assertEqual(interpreter.text, "Forest says: fizz")
+
+    @unittest.skip("reason not implemented")
+    def test_simple_buzz_feature(self):
+       interpreter = Interpreter("WALK_PATH_IF_SEE^10^(*)>^5^OvO^0^echo^<<buzz>>")
+       self.assertEqual(interpreter.text, "Forest says: buzz")
+
 class TestInterpreter(unittest.TestCase):
     def test_intepreter_should_be_initialized_with_text(self):
         interpreter = Interpreter("echo")
