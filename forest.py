@@ -98,6 +98,8 @@ class Parser(object):
         for item in self.tokens:
             if "STRING_CONTENT" in item:
                 return item["STRING_CONTENT"]
+            elif "INTEGER" in item:
+                return int(item["INTEGER"])
 
     def return_error_message(self):
         ERROR_MESSAGES = ["ERROR ʕノ•ᴥ•ʔノ ︵ =❱❯❭> =❱❯❭>", "Looks like you got lost in the Syntax Woods, Ranger ʕ·ᴥ·ʔ", "Forest does not know what this means ʅʕ•ᴥ•ʔʃ", "ERROR 🌲🌲🌲 ʕ·ᴥ·ʔ 🌲🌲🌲 YIKES", "٩ʕ•͡×•ʔ۶ This operation cant be completed", "Looks like you dont know Forest... but we dont know it either ⊂（´㉨｀*）⊃"]
