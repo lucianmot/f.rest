@@ -1,4 +1,5 @@
 import re
+import random
 
 TOKENS =   [re.compile(r'(?P<IF_START>WALK_PATH_IF_SEE)'), re.compile(r'(?P<ECHO>echo)'), 
             re.compile(r'(?P<BOOLEAN>true|false)'), re.compile(r'(?P<MODULUS>\(\*\)\>)'), 
@@ -79,6 +80,10 @@ class Parser(object):
         for item in self.tokens:
             if "STRING_CONTENT" in item:
                 return item["STRING_CONTENT"]
+
+    def return_error_message(self):
+        ERROR_MESSAGES = ["ERROR ʕノ•ᴥ•ʔノ ︵ =❱❯❭> =❱❯❭>", "Looks like you got lost in the Syntax Woods, Ranger ʕ·ᴥ·ʔ", "Forest does not know what this means ʅʕ•ᴥ•ʔʃ", "ERROR 🌲🌲🌲 ʕ·ᴥ·ʔ 🌲🌲🌲 YIKES", "٩ʕ•͡×•ʔ۶ This operation cant be completed", "Looks like you dont know Forest... but we dont know it either ⊂（´㉨｀*）⊃"]
+        return random.choice(ERROR_MESSAGES)
 
 class GrammarRule(object):
     def __init__(self, rule_name, rule):
