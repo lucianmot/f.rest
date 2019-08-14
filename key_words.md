@@ -72,6 +72,7 @@ EXPLORE FOREST_FLOWERS
 | XvX | Dead owl operator | != not equal |    
 | (*)> | Crow operator | % modulo |   
 | ^._.^ | Bat operator | ??? |      
+| WALK_PATH_IF_SEE | ?? | if statement start |  
 
 ---
 
