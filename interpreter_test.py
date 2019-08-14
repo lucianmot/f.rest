@@ -124,77 +124,48 @@ class TestParser(unittest.TestCase):
         parser = Parser(tokens)
         self.assertEqual(parser.match_grammar_rule(), "rule_4")
 
-    def test_create_ast_equals_for_grammar_rule_4(self):
-        tokens = [{"IF_START" : "WALK_PATH_IF_SEE"}, {"INTEGER" : "30"}, {"MODULUS" : "(*)>"}, {"INTEGER" : "15"}, {"EQUALS" : "OvO"}, {"INTEGER" : "0"}, {"ECHO" : "echo"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "fizzbuzz"}, {"STRSTOP" : ">>"}, {"END" : "CAMP"}]
+class TestParserASTForGrammarRule4(unittest.TestCase):
+
+    def setUp(self):
+        tokens = [{"IF_START" : "WALK_PATH_IF_SEE"}, {"INTEGER" : 30}, {"MODULUS" : "(*)>"}, {"INTEGER" : 15}, {"EQUALS" : "OvO"}, {"INTEGER" : 0}, {"ECHO" : "echo"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "fizzbuzz"}, {"STRSTOP" : ">>"}, {"END" : "CAMP"}]
         parser = Parser(tokens)
-        ast_output = parser.create_ast_for_rule_4()
-        self.assertIsInstance(ast_output, ASTConditional)
+        self.ast_output = parser.create_ast_for_rule_4()
+
+    def test_create_ast_equals_for_grammar_rule_4(self):
+        self.assertIsInstance(self.ast_output, ASTConditional)
 
     def test_create_ast_equals_for_grammar_rule_4_then_branch(self):
-        tokens = [{"IF_START" : "WALK_PATH_IF_SEE"}, {"INTEGER" : "30"}, {"MODULUS" : "(*)>"}, {"INTEGER" : "15"}, {"EQUALS" : "OvO"}, {"INTEGER" : "0"}, {"ECHO" : "echo"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "fizzbuzz"}, {"STRSTOP" : ">>"}, {"END" : "CAMP"}]
-        parser = Parser(tokens)
-        ast_output = parser.create_ast_for_rule_4()
-        self.assertIsInstance(ast_output.then_branch, ASTEcho)
+        self.assertIsInstance(self.ast_output.then_branch, ASTEcho)
 
     def test_create_ast_equals_for_grammar_rule_4_then_branch_echos_is_a_string(self):
-        tokens = [{"IF_START" : "WALK_PATH_IF_SEE"}, {"INTEGER" : "30"}, {"MODULUS" : "(*)>"}, {"INTEGER" : "15"}, {"EQUALS" : "OvO"}, {"INTEGER" : "0"}, {"ECHO" : "echo"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "fizzbuzz"}, {"STRSTOP" : ">>"}, {"END" : "CAMP"}]
-        parser = Parser(tokens)
-        ast_output = parser.create_ast_for_rule_4()
-        self.assertIsInstance(ast_output.then_branch.expr, ASTString)
+        self.assertIsInstance(self.ast_output.then_branch.expr, ASTString)
 
     def test_create_ast_equals_for_grammar_rule_4_then_branch_echos_is_a_string_with_value_fizzbuzz(self):
-        tokens = [{"IF_START" : "WALK_PATH_IF_SEE"}, {"INTEGER" : "30"}, {"MODULUS" : "(*)>"}, {"INTEGER" : "15"}, {"EQUALS" : "OvO"}, {"INTEGER" : "0"}, {"ECHO" : "echo"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "fizzbuzz"}, {"STRSTOP" : ">>"}, {"END" : "CAMP"}]
-        parser = Parser(tokens)
-        ast_output = parser.create_ast_for_rule_4()
-        self.assertEqual(ast_output.then_branch.expr.value, "fizzbuzz")
+        self.assertEqual(self.ast_output.then_branch.expr.value, "fizzbuzz")
 
     def test_create_ast_equals_for_grammar_rule_4_ast_equal_on_expression_branch(self):
-        tokens = [{"IF_START" : "WALK_PATH_IF_SEE"}, {"INTEGER" : "30"}, {"MODULUS" : "(*)>"}, {"INTEGER" : "15"}, {"EQUALS" : "OvO"}, {"INTEGER" : "0"}, {"ECHO" : "echo"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "fizzbuzz"}, {"STRSTOP" : ">>"}, {"END" : "CAMP"}]
-        parser = Parser(tokens)
-        ast_output = parser.create_ast_for_rule_4()
-        self.assertIsInstance(ast_output.expr_branch, ASTEquals)
+        self.assertIsInstance(self.ast_output.expr_branch, ASTEquals)
 
     def test_create_ast_equals_for_grammar_rule_4_ASTEqual_left_branch_has_modulus(self):
-        tokens = [{"IF_START" : "WALK_PATH_IF_SEE"}, {"INTEGER" : "30"}, {"MODULUS" : "(*)>"}, {"INTEGER" : "15"}, {"EQUALS" : "OvO"}, {"INTEGER" : "0"}, {"ECHO" : "echo"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "fizzbuzz"}, {"STRSTOP" : ">>"}, {"END" : "CAMP"}]
-        parser = Parser(tokens)
-        ast_output = parser.create_ast_for_rule_4()
-        self.assertIsInstance(ast_output.expr_branch.operand1, ASTModulus)
+        self.assertIsInstance(self.ast_output.expr_branch.operand1, ASTModulus)
 
     def test_create_ast_equals_for_grammar_rule_4_Modulus_int_left_branch(self):
-        tokens = [{"IF_START" : "WALK_PATH_IF_SEE"}, {"INTEGER" : "30"}, {"MODULUS" : "(*)>"}, {"INTEGER" : "15"}, {"EQUALS" : "OvO"}, {"INTEGER" : "0"}, {"ECHO" : "echo"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "fizzbuzz"}, {"STRSTOP" : ">>"}, {"END" : "CAMP"}]
-        parser = Parser(tokens)
-        ast_output = parser.create_ast_for_rule_4()
-        self.assertIsInstance(ast_output.expr_branch.operand1.operand1, ASTInteger)
+        self.assertIsInstance(self.ast_output.expr_branch.operand1.operand1, ASTInteger)
 
     def test_create_ast_euals_for_grammar_rule_4_Modulus_int_left_branch_value_30(self):
-        tokens = [{"IF_START" : "WALK_PATH_IF_SEE"}, {"INTEGER" : 30}, {"MODULUS" : "(*)>"}, {"INTEGER" : 15}, {"EQUALS" : "OvO"}, {"INTEGER" : "0"}, {"ECHO" : "echo"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "fizzbuzz"}, {"STRSTOP" : ">>"}, {"END" : "CAMP"}]
-        parser = Parser(tokens)
-        ast_output = parser.create_ast_for_rule_4()
-        self.assertEqual(ast_output.expr_branch.operand1.operand1.value, 30)
+        self.assertEqual(self.ast_output.expr_branch.operand1.operand1.value, 30)
 
     def test_create_ast_equals_for_grammar_rule_4_Modulus_int_right_branch(self):
-        tokens = [{"IF_START" : "WALK_PATH_IF_SEE"}, {"INTEGER" : "30"}, {"MODULUS" : "(*)>"}, {"INTEGER" : "15"}, {"EQUALS" : "OvO"}, {"INTEGER" : "0"}, {"ECHO" : "echo"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "fizzbuzz"}, {"STRSTOP" : ">>"}, {"END" : "CAMP"}]
-        parser = Parser(tokens)
-        ast_output = parser.create_ast_for_rule_4()
-        self.assertIsInstance(ast_output.expr_branch.operand1.operand2, ASTInteger)
+        self.assertIsInstance(self.ast_output.expr_branch.operand1.operand2, ASTInteger)
 
     def test_create_ast_euals_for_grammar_rule_4_Modulus_int_right_branch_value_15(self):
-        tokens = [{"IF_START" : "WALK_PATH_IF_SEE"}, {"INTEGER" : 30}, {"MODULUS" : "(*)>"}, {"INTEGER" : 15}, {"EQUALS" : "OvO"}, {"INTEGER" : 0}, {"ECHO" : "echo"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "fizzbuzz"}, {"STRSTOP" : ">>"}, {"END" : "CAMP"}]
-        parser = Parser(tokens)
-        ast_output = parser.create_ast_for_rule_4()
-        self.assertEqual(ast_output.expr_branch.operand1.operand2.value, 15)
+        self.assertEqual(self.ast_output.expr_branch.operand1.operand2.value, 15)
 
     def test_create_ast_equals_for_grammar_rule_4_equal_right_branch(self):
-        tokens = [{"IF_START" : "WALK_PATH_IF_SEE"}, {"INTEGER" : "30"}, {"MODULUS" : "(*)>"}, {"INTEGER" : "15"}, {"EQUALS" : "OvO"}, {"INTEGER" : 0}, {"ECHO" : "echo"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "fizzbuzz"}, {"STRSTOP" : ">>"}, {"END" : "CAMP"}]
-        parser = Parser(tokens)
-        ast_output = parser.create_ast_for_rule_4()
-        self.assertIsInstance(ast_output.expr_branch.operand2, ASTInteger)
+        self.assertIsInstance(self.ast_output.expr_branch.operand2, ASTInteger)
 
     def test_create_ast_euals_for_grammar_rule_4_equal_right_branch_value_0(self):
-        tokens = [{"IF_START" : "WALK_PATH_IF_SEE"}, {"INTEGER" : 30}, {"MODULUS" : "(*)>"}, {"INTEGER" : 15}, {"EQUALS" : "OvO"}, {"INTEGER" : 0}, {"ECHO" : "echo"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "fizzbuzz"}, {"STRSTOP" : ">>"}, {"END" : "CAMP"}]
-        parser = Parser(tokens)
-        ast_output = parser.create_ast_for_rule_4()
-        self.assertEqual(ast_output.expr_branch.operand2.value, 0)
+        self.assertEqual(self.ast_output.expr_branch.operand2.value, 0)
 
 class TestAST(unittest.TestCase):
     def test_AST_String_node_is_created_with_the_string_value(self):
