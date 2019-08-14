@@ -1,4 +1,4 @@
-# 🌲 Forest language 🌲
+# 🌲 Forest 🌲
 
 A Python-based, forest-themed programming language. Coming soon!
 
