@@ -299,5 +299,22 @@ class TestTokeniser(unittest.TestCase):
         tokeniser = Tokeniser("WALK_PATH_IF_SEE^30^(*)>^15^OvO^0^echo^<<fizzbuzz>>^CAMP")
         self.assertEqual(tokeniser.create_tokens(), [{"IF_START" : "WALK_PATH_IF_SEE"}, {"INTEGER" : "30"}, {"MODULUS" : "(*)>"}, {"INTEGER" : "15"}, {"EQUALS" : "OvO"}, {"INTEGER" : "0"}, {"ECHO" : "echo"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "fizzbuzz"}, {"STRSTOP" : ">>"}, {"END" : "CAMP"}])
 
+    def test_tokenise_variable_assigment(self):
+        from forest import Tokeniser
+        tokeniser = Tokeniser("BACKPACK")
+        self.assertEqual(tokeniser.create_tokens(), [{"VARIABLE" : "BACKPACK"}])
+
+    def test_tokenise_variable_assigment_assigner(self):
+        from forest import Tokeniser
+        tokeniser = Tokeniser("PACK_WITH")
+        self.assertEqual(tokeniser.create_tokens(), [{"ASSIGNMENT" : "PACK_WITH"}])
+
+    def test_tokenise_variable_assignment_with_a_string(self):
+        from forest import Tokeniser
+        tokeniser = Tokeniser("BACKPACK:arnold^PACK_WITH^<<pikachu>>")
+        self.assertEqual(tokeniser.create_tokens(), [{"VARIABLE" : "BACKPACK"}, {"VARIABLE_NAME" : "arnold"}, {"ASSIGNMENT" : "PACK_WITH"},
+        {"STRSTART" : "<<"}, {"STRING_CONTENT" : "pikachu"}, {"STRSTOP" : ">>"}])
+    
+
 if __name__ == '__main__':
     unittest.main()
