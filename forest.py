@@ -10,22 +10,20 @@ class Interpreter(object):
 
     def response(self):
         tokeniser = Tokeniser(self.text)
-        token = tokeniser.create_tokens()
-        parser = Parser(token)
-        matched_grammar_rule = parser.match_grammar_rule()
-        if matched_grammar_rule == "grammar_rule_1":
-            ast_output = parser.create_ast_for_rule_1()
-        elif matched_grammar_rule == "grammar_rule_2":
-            ast_output = parser.create_ast_for_rule_2()
-        else:
-            ast_output = parser.create_ast_for_rule_3()
-        return self.visit_tree(ast_output)
+        parser = Parser(tokeniser.create_tokens())
+        return self.visit_tree(self._get_ast_method(parser))
 
     def visit_tree(self, ast_output):
         return self.visit_ast_echo(ast_output)
 
     def visit_ast_echo(self, ast_echo_node):
         return "Forest says: " + ast_echo_node.expr.value
+
+    def _get_ast_method(self, parser):
+        method_name = 'create_ast_for_' + parser.match_grammar_rule()
+        ast_method = getattr(parser, method_name)
+        return ast_method()
+
 
 class Tokeniser(object):
     def __init__(self, text):
@@ -49,9 +47,9 @@ class Tokeniser(object):
 class Parser(object):
     def __init__(self, tokens):
         self.tokens = tokens
-        self.grammar_rule_1 = GrammarRule("grammar_rule_1",["ECHO", "STRSTART", "STRING_CONTENT", "STRSTOP"])
-        self.grammar_rule_2 = GrammarRule("grammar_rule_2",["ECHO", "INTEGER"])
-        self.grammar_rule_3 = GrammarRule("grammar_rule_3",["STRING_CONTENT", "EQUALS", "STRING_CONTENT"])
+        self.grammar_rule_1 = GrammarRule("rule_1",["ECHO", "STRSTART", "STRING_CONTENT", "STRSTOP"])
+        self.grammar_rule_2 = GrammarRule("rule_2",["ECHO", "INTEGER"])
+        self.grammar_rule_3 = GrammarRule("rule_3",["STRING_CONTENT", "EQUALS", "STRING_CONTENT"])
         self.rules = [self.grammar_rule_1, self.grammar_rule_2, self.grammar_rule_3]
 
     def user_input_tokens(self):

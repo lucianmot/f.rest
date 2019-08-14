@@ -61,7 +61,7 @@ class TestParser(unittest.TestCase):
     def test_valid_sequence_of_string_tokens_returns_true(self):
         tokens = [{"ECHO": "echo"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "string"}, {"STRSTOP" : ">>"}]
         parser = Parser(tokens)
-        self.assertEqual(parser.match_grammar_rule(), "grammar_rule_1")
+        self.assertEqual(parser.match_grammar_rule(), "rule_1")
 
     def test_invalid_sequence_of_string_tokens_returns_false(self):
         tokens = [{"ECHO": "echo"}, {"STRING_CONTENT" : "string"}, {"STRSTOP" : ">>"}]
@@ -71,12 +71,12 @@ class TestParser(unittest.TestCase):
     def test_valid_sequence_of_integer_tokens_returns_true(self):
         tokens = [{"ECHO": "echo"}, {"INTEGER": 8}]
         parser = Parser(tokens)
-        self.assertEqual(parser.match_grammar_rule(), "grammar_rule_2")
+        self.assertEqual(parser.match_grammar_rule(), "rule_2")
 
     def test_valid_sequence_of_stings_and_equal_comparator_tokens_returns_grammar_rule3(self):
         tokens = [{"STRING_CONTENT": "Hello Forest"}, {"EQUALS": "OvO"}, {"STRING_CONTENT": "Hello Forest"}]
         parser = Parser(tokens)
-        self.assertEqual(parser.match_grammar_rule(), "grammar_rule_3")
+        self.assertEqual(parser.match_grammar_rule(), "rule_3")
 
     def test_invalid_sequence_of_integer_tokens_returns_false(self):
         tokens = [{"INTEGER": 8}, {"ECHO": "echo"}]
