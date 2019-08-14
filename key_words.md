@@ -72,7 +72,19 @@ EXPLORE FOREST_FLOWERS
 | XvX | Dead owl operator | != not equal |    
 | (*)> | Crow operator | % modulo |   
 | ^._.^ | Bat operator | ??? |      
-| WALK_PATH_IF_SEE | ?? | if statement start |  
+| WALK_PATH_IF_SEE | do this if | if statement start |  
+| BACKPACK | create backpack | create variable |   
+| PACK_WITH | store in backpack | = assignment |  
+
+### Usage
+
+**Variable assignment**  
+
+```
+BACKPACK:myvar^PACK_WITH^<<poop>> 
+
+// echo^myvar should print poop
+```
 
 ---
 
