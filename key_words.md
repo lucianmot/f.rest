@@ -79,5 +79,6 @@ EXPLORE FOREST_FLOWERS
 
 `ERROR ʕノ•ᴥ•ʔノ ︵ =❱❯❭> =❱❯❭>`  
 `Looks like you got lost in the Syntax Woods, Ranger ʕ·ᴥ·ʔ`  
-`ʅʕ•ᴥ•ʔʃ Forest does not know what this means ٩ʕ•͡×•ʔ۶`  
-`ERROR 🌲🌲🌲ʕ·ᴥ·ʔ🌲🌲🌲 YIKES`
+`Forest does not know what this means ʅʕ•ᴥ•ʔʃ `  
+`ERROR 🌲🌲🌲ʕ·ᴥ·ʔ🌲🌲🌲 YIKES`  
+`٩ʕ•͡×•ʔ۶ This operation cant be completed`
