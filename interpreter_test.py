@@ -119,6 +119,11 @@ class TestParser(unittest.TestCase):
         ast_output = parser.create_ast_for_rule_3()
         self.assertEqual(ast_output.operand2.value, "Hello Forest again")
 
+    def test_valid_sequence_for_fizzbuzz_returns_grammar_rule4(self):
+        tokens = [{"IF_START" : "WALK_PATH_IF_SEE"}, {"INTEGER" : "30"}, {"MODULUS" : "(*)>"}, {"INTEGER" : "15"}, {"EQUALS" : "OvO"}, {"INTEGER" : "0"}, {"ECHO" : "echo"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "fizzbuzz"}, {"STRSTOP" : ">>"}, {"END" : "CAMP"}]
+        parser = Parser(tokens)
+        self.assertEqual(parser.match_grammar_rule(), "rule_4")
+
 class TestAST(unittest.TestCase):
     def test_AST_String_node_is_created_with_the_string_value(self):
         string_ast_node = ASTString("Hello World")
@@ -175,16 +180,16 @@ class TestTokeniser(unittest.TestCase):
         from forest import Tokeniser
         tokeniser = Tokeniser("<<a lot of text>>")
         self.assertEqual(tokeniser.create_tokens(), [{"STRSTART" : "<<"}, {"STRING_CONTENT" : "a lot of text"}, {"STRSTOP" : ">>"}])
-        
+
     def test_method_returns_comparison_token_for_owl_operator(self):
         from forest import Tokeniser
         tokeniser = Tokeniser("OvO")
-        self.assertEqual(tokeniser.create_tokens(), [{"EQUALS" : "OvO"}])        
+        self.assertEqual(tokeniser.create_tokens(), [{"EQUALS" : "OvO"}])
 
     def test_method_returns_comparison_token_and_bool_for_owl_operator_with_bools(self):
         from forest import Tokeniser
         tokeniser = Tokeniser("true^OvO^false")
-        self.assertEqual(tokeniser.create_tokens(), [{"BOOLEAN" : "true"}, {"EQUALS" : "OvO"}, {"BOOLEAN" : "false"}])        
+        self.assertEqual(tokeniser.create_tokens(), [{"BOOLEAN" : "true"}, {"EQUALS" : "OvO"}, {"BOOLEAN" : "false"}])
 
     def test_method_returns_tokens_for_String_comparison(self):
         from forest import Tokeniser
@@ -205,7 +210,7 @@ class TestTokeniser(unittest.TestCase):
         from forest import Tokeniser
         tokeniser = Tokeniser("<<Superman>>^XvX^<<Batman>>")
         self.assertEqual(tokeniser.create_tokens(), [{"STRSTART" : "<<"}, {"STRING_CONTENT" : "Superman"}, {"STRSTOP" : ">>"}, {"NOT_EQUAL" : "XvX"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "Batman"}, {"STRSTOP" : ">>"}])
-    
+
     def test_method_returns_crow_operator_when_passed_in(self):
         from forest import Tokeniser
         tokeniser = Tokeniser("(*)>")

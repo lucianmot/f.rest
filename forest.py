@@ -50,7 +50,8 @@ class Parser(object):
         self.grammar_rule_1 = GrammarRule("rule_1",["ECHO", "STRSTART", "STRING_CONTENT", "STRSTOP"])
         self.grammar_rule_2 = GrammarRule("rule_2",["ECHO", "INTEGER"])
         self.grammar_rule_3 = GrammarRule("rule_3",["STRING_CONTENT", "EQUALS", "STRING_CONTENT"])
-        self.rules = [self.grammar_rule_1, self.grammar_rule_2, self.grammar_rule_3]
+        self.grammar_rule_4 = GrammarRule("rule_4",["IF_START", "INTEGER", "MODULUS", "INTEGER", "EQUALS", "INTEGER", "ECHO", "STRSTART", "STRING_CONTENT", "STRSTOP", "END"] )
+        self.rules = [self.grammar_rule_1, self.grammar_rule_2, self.grammar_rule_3, self.grammar_rule_4]
 
     def user_input_tokens(self):
         parse_keys = []
