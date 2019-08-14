@@ -142,11 +142,17 @@ class TestParser(unittest.TestCase):
         ast_output = parser.create_ast_for_rule_4()
         self.assertIsInstance(ast_output.expr_branch.operand1, ASTModulus)
 
-    def test_create_ast_euqlas_for_grammar_rule_4_Modulus_int_left_branch(self):
+    def test_create_ast_equals_for_grammar_rule_4_Modulus_int_left_branch(self):
         tokens = [{"IF_START" : "WALK_PATH_IF_SEE"}, {"INTEGER" : "30"}, {"MODULUS" : "(*)>"}, {"INTEGER" : "15"}, {"EQUALS" : "OvO"}, {"INTEGER" : "0"}, {"ECHO" : "echo"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "fizzbuzz"}, {"STRSTOP" : ">>"}, {"END" : "CAMP"}]
         parser = Parser(tokens)
         ast_output = parser.create_ast_for_rule_4()
         self.assertIsInstance(ast_output.expr_branch.operand1.operand1, ASTInteger)
+
+    def test_create_ast_euals_for_grammar_rule_4_Modulus_int_left_branch_value_30(self):
+        tokens = [{"IF_START" : "WALK_PATH_IF_SEE"}, {"INTEGER" : 30}, {"MODULUS" : "(*)>"}, {"INTEGER" : "15"}, {"EQUALS" : "OvO"}, {"INTEGER" : "0"}, {"ECHO" : "echo"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "fizzbuzz"}, {"STRSTOP" : ">>"}, {"END" : "CAMP"}]
+        parser = Parser(tokens)
+        ast_output = parser.create_ast_for_rule_4()
+        self.assertEqual(ast_output.expr_branch.operand1.operand1.value, 30)
 
 class TestAST(unittest.TestCase):
     def test_AST_String_node_is_created_with_the_string_value(self):
@@ -279,7 +285,6 @@ class TestTokeniser(unittest.TestCase):
         from forest import Tokeniser
         tokeniser = Tokeniser("WALK_PATH_IF_SEE^30^(*)>^15^OvO^0^echo^<<fizzbuzz>>^CAMP")
         self.assertEqual(tokeniser.create_tokens(), [{"IF_START" : "WALK_PATH_IF_SEE"}, {"INTEGER" : "30"}, {"MODULUS" : "(*)>"}, {"INTEGER" : "15"}, {"EQUALS" : "OvO"}, {"INTEGER" : "0"}, {"ECHO" : "echo"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "fizzbuzz"}, {"STRSTOP" : ">>"}, {"END" : "CAMP"}])
-
 
 if __name__ == '__main__':
     unittest.main()
