@@ -60,10 +60,12 @@ Try putting your own message between the `<<tree tops>>`!
 
 **Variable assignment**  
 
+start expression with `BACKPACK:` followed by the name of your variable, and assign value with the `PACK_WITH` operator. Don't forget to sprinkle trees between your operators!  
+
 ```
 BACKPACK:myvar^PACK_WITH^<<bears 🐻🐻🐻>> 
 
-// echo^myvar should print 'bears 🐻🐻🐻'
+// echo^myvar should return 'bears 🐻🐻🐻'
 ```
 
 Take care, don't start the fire.
