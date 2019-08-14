@@ -82,12 +82,15 @@ class Parser(object):
     def create_ast_for_rule_4(self):
         int_token1 = self.tokens[1]
         int_token2 = self.tokens[3]
-
+        int_token3 = self.tokens[5]
+        str_token1 = self.tokens[8]
         integer_operand1 = ASTInteger(int_token1["INTEGER"])
         integer_operand2 = ASTInteger(int_token2["INTEGER"])
+        integer_operand3 = ASTInteger(int_token3["INTEGER"])
+        string_operand = ASTString(str_token1["STRING_CONTENT"])
         modulus_operator = ASTModulus(integer_operand1, integer_operand2)
-        expr_branch = ASTEquals(modulus_operator, "world")
-        return ASTConditional(expr_branch, "Jo", "Aleks")
+        expr_branch = ASTEquals(modulus_operator, integer_operand3)
+        return ASTConditional(expr_branch, ASTEcho(string_operand), "Aleks")
 
     def get_token_by_key(self):
         for item in self.tokens:
