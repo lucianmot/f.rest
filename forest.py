@@ -1,10 +1,10 @@
 import re
 
-TOKENS =   [re.compile(r'(?P<IF_START>WALK_PATH_IF_SEE)'), re.compile(r'(?P<ECHO>echo)'), 
-            re.compile(r'(?P<BOOLEAN>true|false)'), re.compile(r'(?P<MODULUS>\(\*\)\>)'), 
-            re.compile(r'(?P<EQUALS>OvO)'), re.compile(r'(?P<NOT_EQUAL>XvX)'), 
-            re.compile(r'(?P<INTEGER>[\d]+)'), re.compile(r'(?P<STRSTART><<)'), 
-            re.compile(r'(?:<<)(?P<STRING_CONTENT>.+)(?:>>)'), re.compile(r'(?P<STRSTOP>>>)'), 
+TOKENS =   [re.compile(r'(?P<IF_START>WALK_PATH_IF_SEE)'), re.compile(r'(?P<ECHO>echo)'),
+            re.compile(r'(?P<BOOLEAN>true|false)'), re.compile(r'(?P<MODULUS>\(\*\)\>)'),
+            re.compile(r'(?P<EQUALS>OvO)'), re.compile(r'(?P<NOT_EQUAL>XvX)'),
+            re.compile(r'(?P<INTEGER>[\d]+)'), re.compile(r'(?P<STRSTART><<)'),
+            re.compile(r'(?:<<)(?P<STRING_CONTENT>.+)(?:>>)'), re.compile(r'(?P<STRSTOP>>>)'),
             re.compile(r'(?P<END>CAMP)')]
 
 class Interpreter(object):
@@ -79,6 +79,9 @@ class Parser(object):
         str_token3 = self.tokens[2]
         return ASTEquals(ASTString(str_token1["STRING_CONTENT"]), ASTString(str_token3["STRING_CONTENT"]))
 
+    def create_ast_for_rule_4(self):
+        return ASTConditional("James", "Jo", "Aleks")
+
     def get_token_by_key(self):
         for item in self.tokens:
             if "STRING_CONTENT" in item:
@@ -101,3 +104,9 @@ class ASTEquals(object):
     def __init__(self, operand1, operand2):
         self.operand1 = operand1
         self.operand2 = operand2
+
+class ASTConditional(object):
+    def __init__(self, expr, then_branch, else_branch):
+        self.expr = expr
+        self.then_branch = then_branch
+        self.else_branch = else_branch
