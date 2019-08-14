@@ -19,7 +19,10 @@ class Interpreter(object):
         return self.visit_tree(self._get_ast_method(parser))
 
     def visit_tree(self, ast_output):
-        return self.visit_ast_echo(ast_output)
+        if isinstance(ast_output, ASTEcho):
+            return self.visit_ast_echo(ast_output)
+        elif isinstance(ast_output, ASTConditional):
+            return self.visit_ast_conditional(ast_output)
 
     def visit_ast_echo(self, ast_echo_node):
         return "Forest says: " + ast_echo_node.expr.value
@@ -29,6 +32,15 @@ class Interpreter(object):
         result2 = ast_modulus_node.operand2.value
         result3 = result1%result2
         return result3
+
+    def visit_ast_equals(self, ast_equals_node):
+        return self.visit_ast_modulus(ast_equals_node.operand1) == ast_equals_node.operand2.value
+
+    def visit_ast_conditional(self, ast_conditional_node):
+        if self.visit_ast_equals(ast_conditional_node.expr_branch) == True:
+            return self.visit_ast_echo(ast_conditional_node.then_branch)
+        else:
+            return False
 
     def _get_ast_method(self, parser):
         method_name = 'create_ast_for_' + parser.match_grammar_rule()
@@ -61,7 +73,7 @@ class Parser(object):
         self.grammar_rule_1 = GrammarRule("rule_1",["ECHO", "STRSTART", "STRING_CONTENT", "STRSTOP"])
         self.grammar_rule_2 = GrammarRule("rule_2",["ECHO", "INTEGER"])
         self.grammar_rule_3 = GrammarRule("rule_3",["STRING_CONTENT", "EQUALS", "STRING_CONTENT"])
-        self.grammar_rule_4 = GrammarRule("rule_4",["IF_START", "INTEGER", "MODULUS", "INTEGER", "EQUALS", "INTEGER", "ECHO", "STRSTART", "STRING_CONTENT", "STRSTOP", "END"] )
+        self.grammar_rule_4 = GrammarRule("rule_4",["IF_START", "INTEGER", "MODULUS", "INTEGER", "EQUALS", "INTEGER", "ECHO", "STRSTART", "STRING_CONTENT", "STRSTOP"] )
         self.rules = [self.grammar_rule_1, self.grammar_rule_2, self.grammar_rule_3, self.grammar_rule_4]
 
     def user_input_tokens(self):
@@ -76,7 +88,7 @@ class Parser(object):
         for rule in self.rules:
             if rule.rule == self.user_input_tokens():
                 return rule.rule_name
-        raise Exception("Syntax Error")
+        raise Exception("Syntax Error " + self.return_error_message())
 
     def create_ast_for_rule_1(self):
         user_input_string = self.get_token_by_key()
@@ -141,4 +153,4 @@ class ASTModulus(object):
 
 class ASTInteger(object):
     def __init__(self, value):
-        self.value = value
+        self.value = int(value)
