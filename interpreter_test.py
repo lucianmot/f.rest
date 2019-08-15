@@ -60,6 +60,11 @@ class TestParser(unittest.TestCase):
         parser = Parser(tokens)
         self.assertEqual(parser.match_grammar_rule(), "rule_1")
 
+    def test_valid_sequence_of_string_tokens_with_comparison_returns_true(self):
+        tokens = [{"STRSTART" : "<<"}, {"STRING_CONTENT" : "string"}, {"STRSTOP" : ">>"}, {"EQUALS": "OvO"}, {"STRSTART" : "<<"}, {"STRING_CONTENT" : "string"}, {"STRSTOP" : ">>"}]
+        parser = Parser(tokens)
+        self.assertEqual(parser.match_grammar_rule(), "rule_3")
+
     def test_invalid_sequence_of_string_tokens_returns_false(self):
         tokens = [{"ECHO": "echo"}, {"STRING_CONTENT" : "string"}, {"STRSTOP" : ">>"}]
         parser = Parser(tokens)
@@ -69,11 +74,6 @@ class TestParser(unittest.TestCase):
         tokens = [{"ECHO": "echo"}, {"INTEGER": 8}]
         parser = Parser(tokens)
         self.assertEqual(parser.match_grammar_rule(), "rule_2")
-
-    def test_valid_sequence_of_stings_and_equal_comparator_tokens_returns_grammar_rule3(self):
-        tokens = [{"STRING_CONTENT": "Hello Forest"}, {"EQUALS": "OvO"}, {"STRING_CONTENT": "Hello Forest"}]
-        parser = Parser(tokens)
-        self.assertEqual(parser.match_grammar_rule(), "rule_3")
 
     def test_invalid_sequence_of_integer_tokens_returns_false(self):
         tokens = [{"INTEGER": 8}, {"ECHO": "echo"}]
@@ -99,19 +99,19 @@ class TestParser(unittest.TestCase):
         self.assertEqual(ast_output.expr.value, "anotherstring")
 
     def test_create_ast_equals_for_grammar_rule_3(self):
-        tokens = [{"STRING_CONTENT": "Hello Forest"}, {"EQUALS": "OvO"}, {"STRING_CONTENT": "Hello Forest"}]
+        tokens = [{"STRSTART" : "<<"}, {"STRING_CONTENT": "Hello Forest"}, {"STRSTOP" : ">>"}, {"EQUALS": "OvO"}, {"STRSTART" : "<<"}, {"STRING_CONTENT": "Hello Forest"}, {"STRSTOP" : ">>"}]
         parser = Parser(tokens)
         ast_output = parser.create_ast_for_rule_3()
         self.assertIsInstance(ast_output, ASTEquals)
 
     def test_create_ast_equals_for_grammar_rule_3_string_value_operand_1(self):
-        tokens = [{"STRING_CONTENT": "Hello Forest"}, {"EQUALS": "OvO"}, {"STRING_CONTENT": "Hello Forest again"}]
+        tokens = [{"STRSTART" : "<<"}, {"STRING_CONTENT": "Hello Forest"}, {"STRSTOP" : ">>"}, {"EQUALS": "OvO"}, {"STRSTART" : "<<"}, {"STRING_CONTENT": "Hello Forest again"}, {"STRSTOP" : ">>"}]
         parser = Parser(tokens)
         ast_output = parser.create_ast_for_rule_3()
         self.assertEqual(ast_output.operand1.value, "Hello Forest")
 
     def test_create_ast_equals_for_grammar_rule_3_string_value_operand_3(self):
-        tokens = [{"STRING_CONTENT": "Hello Forest"}, {"EQUALS": "OvO"}, {"STRING_CONTENT": "Hello Forest again"}]
+        tokens = [{"STRSTART" : "<<"}, {"STRING_CONTENT": "Hello Forest"}, {"STRSTOP" : ">>"}, {"EQUALS": "OvO"}, {"STRSTART" : "<<"}, {"STRING_CONTENT": "Hello Forest again"}, {"STRSTOP" : ">>"}]
         parser = Parser(tokens)
         ast_output = parser.create_ast_for_rule_3()
         self.assertEqual(ast_output.operand2.value, "Hello Forest again")
