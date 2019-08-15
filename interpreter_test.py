@@ -196,6 +196,18 @@ class TestInterpreterForGrammarRule4(unittest.TestCase):
         ast_conditional = ASTConditional(ast_equal, ast_echo, "else...")
         self.assertEqual(interpreter.visit_ast_conditional(ast_conditional), "Forest says: FizzBuzz")
 
+class TestInterpreterForGrammarRule3(unittest.TestCase):
+
+    def test_visit_equal_two_same_strings_returns_true(self):
+        interpreter = Interpreter("")
+        ast_equal = ASTEquals(ASTString("hello"), ASTString("hello"))
+        self.assertEqual(interpreter.visit_ast_equals(ast_equal), True)
+
+    def test_visit_equal_two_different_strings_returns_false(self):
+        interpreter = Interpreter("")
+        ast_equal = ASTEquals(ASTString("hello"), ASTString("not hello"))
+        self.assertEqual(interpreter.visit_ast_equals(ast_equal), False)
+
 class TestAST(unittest.TestCase):
     def test_AST_String_node_is_created_with_the_string_value(self):
         string_ast_node = ASTString("Hello World")

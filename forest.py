@@ -34,7 +34,10 @@ class Interpreter(object):
         return result3
 
     def visit_ast_equals(self, ast_equals_node):
-        return self.visit_ast_modulus(ast_equals_node.operand1) == ast_equals_node.operand2.value
+        if (isinstance(ast_equals_node.operand1, ASTString)) and (isinstance(ast_equals_node.operand2, ASTString)):
+            return ast_equals_node.operand1.value == ast_equals_node.operand2.value
+        else:
+            return self.visit_ast_modulus(ast_equals_node.operand1) == ast_equals_node.operand2.value
 
     def visit_ast_conditional(self, ast_conditional_node):
         if self.visit_ast_equals(ast_conditional_node.expr_branch) == True:
