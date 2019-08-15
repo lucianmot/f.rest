@@ -23,6 +23,9 @@ class Interpreter(object):
             return self.visit_ast_echo(ast_output)
         elif isinstance(ast_output, ASTConditional):
             return self.visit_ast_conditional(ast_output)
+        elif isinstance(ast_output, ASTModulus):
+            return self.visit_ast_modulus(ast_output)
+
 
     def visit_ast_echo(self, ast_echo_node):
         return "Forest says: " + ast_echo_node.expr.value
@@ -74,7 +77,8 @@ class Parser(object):
         self.grammar_rule_2 = GrammarRule("rule_2",["ECHO", "INTEGER"])
         self.grammar_rule_3 = GrammarRule("rule_3",["STRING_CONTENT", "EQUALS", "STRING_CONTENT"])
         self.grammar_rule_4 = GrammarRule("rule_4",["IF_START", "INTEGER", "MODULUS", "INTEGER", "EQUALS", "INTEGER", "ECHO", "STRSTART", "STRING_CONTENT", "STRSTOP"] )
-        self.rules = [self.grammar_rule_1, self.grammar_rule_2, self.grammar_rule_3, self.grammar_rule_4]
+        self.grammar_rule_5 = GrammarRule("rule_5", ["INTEGER", "MODULUS", "INTEGER"] )
+        self.rules = [self.grammar_rule_1, self.grammar_rule_2, self.grammar_rule_3, self.grammar_rule_4, self.grammar_rule_5]
 
     def user_input_tokens(self):
         parse_keys = []
@@ -111,6 +115,14 @@ class Parser(object):
         modulus_operator = ASTModulus(integer_operand1, integer_operand2)
         expr_branch = ASTEquals(modulus_operator, integer_operand3)
         return ASTConditional(expr_branch, ASTEcho(string_operand), "Aleks")
+
+    def create_ast_for_rule_5(self):
+        int1 = self.tokens[0]
+        int2 = self.tokens[2]
+        int1_operand = ASTInteger(int1["INTEGER"])
+        int2_operand = ASTInteger(int2["INTEGER"])
+        modulus_op = ASTModulus(int1_operand, int2_operand)
+        return modulus_op
 
     def get_token_by_key(self):
         for item in self.tokens:
