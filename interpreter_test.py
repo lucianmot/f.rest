@@ -14,6 +14,26 @@ class TestFizzBuzzFeature(unittest.TestCase):
        interpreter = Interpreter("WALK_PATH_IF_SEE^10^(*)>^5^OvO^0^echo^<<buzz>>")
        self.assertEqual(interpreter.response(), "Forest says: buzz")
 
+    def test_integer_modulus(self):
+        interpreter = Interpreter("10^(*)>^5")
+        self.assertEqual(interpreter.response(), 0)
+
+    def test_integer_equality(self):
+        interpreter = Interpreter("7^OvO^7")
+        self.assertEqual(interpreter.response(), True)
+
+    def test_integer_equality_when_wrong(self):
+        interpreter = Interpreter("7^OvO^3")
+        self.assertEqual(interpreter.response(), False)
+
+    def test_integer_non_equality(self):
+        interpreter = Interpreter("7^XvX^3")
+        self.assertEqual(interpreter.response(), True)
+
+    def test_integer_non_equality_when_wrong(self):
+        interpreter = Interpreter("7^XvX^7")
+        self.assertEqual(interpreter.response(), False)
+
 class TestInterpreter(unittest.TestCase):
     def test_intepreter_should_be_initialized_with_text(self):
         interpreter = Interpreter("echo")
