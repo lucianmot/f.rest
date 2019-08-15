@@ -34,7 +34,10 @@ class Interpreter(object):
         return result3
 
     def visit_ast_equals(self, ast_equals_node):
-        return self.visit_ast_modulus(ast_equals_node.operand1) == ast_equals_node.operand2.value
+        if (isinstance(ast_equals_node.operand1, ASTString)) and (isinstance(ast_equals_node.operand2, ASTString)):
+            return ast_equals_node.operand1.value == ast_equals_node.operand2.value
+        else:
+            return self.visit_ast_modulus(ast_equals_node.operand1) == ast_equals_node.operand2.value
 
     def visit_ast_conditional(self, ast_conditional_node):
         if self.visit_ast_equals(ast_conditional_node.expr_branch) == True:
@@ -72,7 +75,7 @@ class Parser(object):
         self.tokens = tokens
         self.grammar_rule_1 = GrammarRule("rule_1",["ECHO", "STRSTART", "STRING_CONTENT", "STRSTOP"])
         self.grammar_rule_2 = GrammarRule("rule_2",["ECHO", "INTEGER"])
-        self.grammar_rule_3 = GrammarRule("rule_3",["STRING_CONTENT", "EQUALS", "STRING_CONTENT"])
+        self.grammar_rule_3 = GrammarRule("rule_3",["STRSTART", "STRING_CONTENT", "STRSTOP", "EQUALS", "STRSTART", "STRING_CONTENT", "STRSTOP"])
         self.grammar_rule_4 = GrammarRule("rule_4",["IF_START", "INTEGER", "MODULUS", "INTEGER", "EQUALS", "INTEGER", "ECHO", "STRSTART", "STRING_CONTENT", "STRSTOP"] )
         self.rules = [self.grammar_rule_1, self.grammar_rule_2, self.grammar_rule_3, self.grammar_rule_4]
 
@@ -95,8 +98,8 @@ class Parser(object):
         return ASTEcho(ASTString(user_input_string))
 
     def create_ast_for_rule_3(self):
-        str_token1 = self.tokens[0]
-        str_token3 = self.tokens[2]
+        str_token1 = self.tokens[1]
+        str_token3 = self.tokens[5]
         return ASTEquals(ASTString(str_token1["STRING_CONTENT"]), ASTString(str_token3["STRING_CONTENT"]))
 
     def create_ast_for_rule_4(self):
