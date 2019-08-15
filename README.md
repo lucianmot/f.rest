@@ -64,6 +64,14 @@ $ coverage html
 * use `^` trees between operators and expressions (as you would with spaces in most programming languages) to avoid errors  
 * but if you do end up with errors, we've added lots of unhelpful but entertaining bears to the error messages 🐻
 
+### FizzBuzz in Forest! 
+
+```
+$ WALK_PATH_IF_SEE^30^(*)>^15^OvO^0^echo^<<fizzbuzz>>^
+WALK_PATH_IF_SEE^6^(*)>^3^OvO^0^echo^<<fizz>>^
+WALK_PATH_IF_SEE^10^(*)>^5^OvO^0^echo^<<buzz>>^CAMP
+```
+
 ### Reference
 
 | Forest | Forest explicit | Human |   
