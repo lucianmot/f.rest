@@ -154,3 +154,17 @@ class ASTModulus(object):
 class ASTInteger(object):
     def __init__(self, value):
         self.value = int(value)
+
+def main():
+    while True:
+        text = input('=❱❯❭> ')
+        interpreter = Interpreter(text)
+        try:
+            result = interpreter.response()
+            print(result)
+        except Exception as syntax_err:
+            print("Oops!", syntax_err)
+
+
+if __name__ == '__main__':
+    main()
