@@ -1,6 +1,6 @@
 # 🌲 Forest language 🌲
 
-A Python-based, forest-themed programming language. Coming soon!
+A Python-based, forest-themed programming language. Now in Alpha!
 
 # 🐻 [![Build Status](https://travis-ci.org/lucianmot/f.rest.svg?branch=master)](https://travis-ci.org/lucianmot/f.rest)
 
