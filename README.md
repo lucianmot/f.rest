@@ -9,6 +9,8 @@ A Python-based, forest-themed programming language. Now in Alpha!
 | --- | --- | --- | --- | --- |  
 | ![](github.png) [Aleks](https://github.com/ajmpawlik) | ![](github.png) [Anna](https://github.com/aniasobo) | ![](github.png) [James](https://github.com/zepherine2006DEV) | ![](github.png) [Joe](https://github.com/josephtownshend) | ![](github.png) [Lucian](https://github.com/lucianmot) |    
 
+[Forest website](https://forest-code.herokuapp.com/)  
+
 ---
 ## How to Install Forest
 
@@ -57,10 +59,10 @@ $ coverage html
 
 ### At the moment, Forest has the following capabilities:
 * echo any text within `<<tree tops>>` with `echo<<this message>>`
-* create variables `BACKPACK:myvar^PACK_WITH^<<some text>>`
-* TODO: use the owl operators for comparison of integers: `4^OvO^5` should return `false`; `5^XvX^6` should return `true`    
-* TODO: use the crow operator to calculate modulus of integers: `9^(*)>^2` should return ` 1`  
-* TODO: if statement: start your if statement with `WALK_PATH_IF_SEE` and end with `CAMP`  
+* use the owl operators for comparison of integers: `4^OvO^5` should return `false`; `5^XvX^6` should return `true`    
+* use the crow operator to calculate modulus of integers: `9^(*)>^2` should return ` 1`  
+* if statement: start your if statement with `WALK_PATH_IF_SEE` and end with `CAMP`  
+* TODO: create variables `BACKPACK:myvar^PACK_WITH^<<some text>>`
 * use `^` trees between operators and expressions (as you would with spaces in most programming languages) to avoid errors  
 * but if you do end up with errors, we've added lots of unhelpful but entertaining bears to the error messages 🐻
 
