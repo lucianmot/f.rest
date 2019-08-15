@@ -5,11 +5,9 @@ A Python-based, forest-themed programming language. Coming soon!
 # 🐻 [![Build Status](https://travis-ci.org/lucianmot/f.rest.svg?branch=master)](https://travis-ci.org/lucianmot/f.rest)
 
 ## Team:
-![](github.png) [Aleks](https://github.com/ajmpawlik)    
-![](github.png) [Anna](https://github.com/aniasobo)  
-![](github.png) [James](https://github.com/zepherine2006DEV)      
-![](github.png) [Joe](https://github.com/josephtownshend)   
-![](github.png) [Lucian](https://github.com/lucianmot)
+| | | | | |
+| --- | --- | --- | --- | --- |  
+| ![](github.png) [Aleks](https://github.com/ajmpawlik) | ![](github.png) [Anna](https://github.com/aniasobo) | ![](github.png) [James](https://github.com/zepherine2006DEV) | ![](github.png) [Joe](https://github.com/josephtownshend) | ![](github.png) [Lucian](https://github.com/lucianmot) |    
 
 ---
 ## How to Install Forest
