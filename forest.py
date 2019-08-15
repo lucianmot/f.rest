@@ -25,6 +25,8 @@ class Interpreter(object):
             return self.visit_ast_conditional(ast_output)
         elif isinstance(ast_output, ASTModulus):
             return self.visit_ast_modulus(ast_output)
+        elif isinstance(ast_output, ASTEquals):
+            return self.visit_ast_equals(ast_output)
 
 
     def visit_ast_echo(self, ast_echo_node):
