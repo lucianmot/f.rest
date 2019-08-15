@@ -96,4 +96,4 @@ The diagram below shows how our interpreter is built:
 ![interpreter](Interpreterv2.jpg)
 
 
-Take care, don't start the fire.
+Take care, and don't start a fire. ʕ•ᴥ•ʔﾉ♡
