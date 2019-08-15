@@ -67,12 +67,12 @@ $ coverage html
 ### FizzBuzz in Forest! 
 
 ```
-$ WALK_PATH_IF_SEE^30^(*)>^15^OvO^0^echo^<<fizzbuzz>>^
-WALK_PATH_IF_SEE^6^(*)>^3^OvO^0^echo^<<fizz>>^
-WALK_PATH_IF_SEE^10^(*)>^5^OvO^0^echo^<<buzz>>^CAMP
+$ WALK_PATH_IF_SEE^30^(*)>^15^OvO^0^echo^<<fizzbuzz>>^  
+$ WALK_PATH_IF_SEE^6^(*)>^3^OvO^0^echo^<<fizz>>^  
+$ WALK_PATH_IF_SEE^10^(*)>^5^OvO^0^echo^<<buzz>>^CAMP
 ```
 
-### Reference
+### Reference:
 
 | Forest | Forest explicit | Human |   
 | --- | --- | --- |   
