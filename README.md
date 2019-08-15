@@ -20,8 +20,6 @@ A Python-based, forest-themed programming language. Coming soon!
 `$ python3 forest.py` will open a little Forest REPL. You should see a `=❱❯❭>` tree in your command line prompt. 
 
 
-Try putting your own message between the `<<tree tops>>`!  
-
 ## Test and Code Coverage (via Script)
 
 Install code coverage tool:
@@ -58,7 +56,7 @@ $ coverage html
 ## Using Forest
 
 ### At the moment, Forest has the following capabilities:
-* echo any text within `<<shovels>>` with `echo<<this message>>`
+* echo any text within `<<tree tops>>` with `echo<<this message>>`
 * create variables `BACKPACK:myvar^PACK_WITH^<<some text>>`
 * TODO: use the owl operators for comparison expressions: `true^OvO^false` should return `Forest says: false`; `true^XvX^false` should return `Forest says: true`    
 * TODO: use the crow operator to calculate modulus of integers: `9^(*)>^2` should return `Forest says: 1`  
@@ -70,7 +68,7 @@ $ coverage html
 
 | Forest | Forest explicit | Human |   
 | --- | --- | --- |   
-| <<>> | shovels | string delimiters |  
+| <<>> | shovels/tree tops | string delimiters |  
 | ^ | tree operator | space/general delimiter |  
 | OvO | Owl operator | == equals/comparison |  
 | XvX | Dead owl operator | != not equal |    
