@@ -34,6 +34,23 @@ class TestFizzBuzzFeature(unittest.TestCase):
         interpreter = Interpreter("7^XvX^7")
         self.assertEqual(interpreter.response(), False)
 
+    def test_boolean_equality(self):
+        interpreter = Interpreter("true^OvO^true")
+        self.assertEqual(interpreter.response(), True)
+
+    def test_boolean_equality_when_wrong(self):
+        interpreter = Interpreter("true^OvO^false")
+        self.assertEqual(interpreter.response(), False)
+
+    def test_boolean_non_equality(self):
+        interpreter = Interpreter("true^XvX^false")
+        self.assertEqual(interpreter.response(), True)
+
+    def test_boolean_non_equality_when_wrong(self):
+        interpreter = Interpreter("true^XvX^true")
+        self.assertEqual(interpreter.response(), False)
+
+
 class TestInterpreter(unittest.TestCase):
     def test_intepreter_should_be_initialized_with_text(self):
         interpreter = Interpreter("echo")
