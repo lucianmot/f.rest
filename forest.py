@@ -56,7 +56,7 @@ class Interpreter(object):
         if (isinstance(ast_notequal_node.operand1, ASTInteger)) and (isinstance(ast_notequal_node.operand2, ASTInteger)):
             return ast_notequal_node.operand1.value != ast_notequal_node.operand2.value
         elif (isinstance(ast_notequal_node.operand1, ASTBoolean)) and (isinstance(ast_notequal_node.operand2, ASTBoolean)):
-            return ast_notequal_node.operand1.value != ast_notequal_node.operand2.value
+            return ast_notequal_node.operand1.value !gs= ast_notequal_node.operand2.value
 
 
     def visit_ast_conditional(self, ast_conditional_node):
