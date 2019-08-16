@@ -64,17 +64,7 @@ EXPLORE FOREST_FLOWERS
 
 ---
 
-### Reference
-
-| Forest | Forest explicit | Human |   
-| --- | --- | --- |   
-| OvO | Owl operator | == comparison |  
-| XvX | Dead owl operator | != not equal |    
-| (*)> | Crow operator | % modulo |   
-| ^._.^ | Bat operator | ??? |      
-| WALK_PATH_IF_SEE | do this if | if statement start |  
-| BACKPACK | create backpack | create variable |   
-| PACK_WITH | store in backpack | = assignment |  
+ 
 
 ### Usage
 
